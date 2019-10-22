@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+
+    <link href="CSS/lib/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="CSS/login-form.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg ">
+        <a class="navbar-brand home" href="index.html">
+            <img src="view/instagram-logo.png" width="128" height="30" alt="" />
+        </a>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <div class="login-form">
+        <div class="card user">
+            <article class="card-body">
+
+                <button  class="float-right btn btn-outline-primary" data-toggle="modal"
+                    data-target="#exampleModalCenter">
+                    Sign Up
+                </button>
+
+                <h4 class="card-title mb-4 mt-1">Sign in</h4>
+
+                <hr>
+                <div id='alert' class="alert alert-danger" role="alert">
+                    Wrong username or password. Try again
+                </div>
+                <form>
+                    <div class="form-group">
+                        <input id="username" fieldName="username" class="form-control" placeholder="Email or login">
+                        <div class="invalid-feedback">
+                            Please input a valid username
+                        </div>
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <input id="password" fieldName="password" class="form-control" placeholder="******"
+                            type="password">
+                        <div class="invalid-feedback">
+                            Please input a valid password
+                        </div>
+                    </div>
+                    <!-- form-group// -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button id="login-btn" type="button" class="btn btn-primary btn-block"> Login </button>
+                            </div> <!-- form-group// -->
+                        </div>
+
+                        <div class="col-md-6 text-right">
+                            <a class="small" href="#">Forgot password?</a>
+                        </div>
+                    </div>
+                    <p>
+                        <a href="" class="btn btn-block btn-outline-info"> <i class="fas fa-envelope"></i>   Login via
+                            Google</a>
+                        <a href="https://www.facebook.com/dialog/oauth?client_id=947265442275335&redirect_uri=https://localhost:8080/Messenger/login-facebook"
+                            class="btn btn-block btn-outline-primary"> <i class="fab fa-facebook-f"></i>   Login
+                            via facebook</a>
+                    </p><!-- .row// -->
+                </form>
+            </article>
+        </div> <!-- card.// -->
+    </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Sign up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger alert-username" role="alert">
+                        Username has existed. Try again
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div id="register-loading" class="spinner-border text-info" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <form class="form-input">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+
+                                <input fieldName='firstname' type="text" class="form-control" placeholder="Firstname">
+                                <div class="invalid-feedback">
+                                    Please input a valid name
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+
+                                <input fieldName='lastname' type="text" class="form-control" placeholder="Lastname">
+                                <div class="invalid-feedback">
+                                    Please input a valid name
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <select id="gender" class="form-control">
+                                <option selected>Male</option>
+                                <option>Female</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+
+                            <input fieldName='email' type="email" class="form-control" id="inputAddress"
+                                placeholder="Email">
+                            <div class="invalid-feedback">
+                                Please input a valid Email
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <input fieldName='username' type="text" class="form-control" placeholder="Username">
+                            <div class="invalid-feedback">
+                                Username contains at least 8 characters.
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <input fieldName='password' type="password" class="form-control" placeholder="Password">
+                            <div class="invalid-feedback">
+                                Password contains at least 6 characters.
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <input fieldName='confirm' type="password" class="form-control"
+                                placeholder="Confirm Password">
+                            <div class="invalid-feedback">
+                                Password is not matched.
+                            </div>
+                        </div>
+                        <p align="center">
+                            OR
+                        </p>
+                        <p>
+                            <a href="" class="btn btn-block btn-outline-info"> <i class="fas fa-envelope"></i>   Sign up
+                                via
+                                Gmail</a>
+                            <a href="" class="btn btn-block btn-outline-primary"> <i class="fab fa-facebook-f"></i>
+                                 Sign up
+                                via facebook</a>
+                        </p><!-- .row// -->
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="register-btn" class="btn btn-primary">Sign up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Script/lib/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="Script/lib/popper.min.js" type="text/javascript"></script>
+    <script src="Script/lib/bootstrap.js" type="text/javascript"></script>
+    <script src="Script/lib/material.min.js" type="text/javascript"></script>
+    <script src="Script/lib/semantic.min.js" type="text/javascript"></script>
+    <script src="Script/login.js" type="text/javascript"></script>
+</body>
+<footer>
+
+</footer>
+
+</html>

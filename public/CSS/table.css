@@ -1,0 +1,9 @@
+.liststudent{
+    margin: 5px;
+}
+.liststudent td,th{
+ padding: 7px;   
+}
+.home{
+    background-image: "view/instagram-logo.png";
+}
