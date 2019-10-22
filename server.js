@@ -49,6 +49,7 @@ app.route('/login').post(loginController.login)
 app.route('/register').post(loginController.register);
 app.route('/logout').get(function(erq,res){
     res.clearCookie('sid');
+    
     res.redirect('/login');
 })
 app.route('/home').get(async function(req,res){

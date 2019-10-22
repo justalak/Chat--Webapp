@@ -25,17 +25,21 @@ function addContact() {
         $.ajax({
             method: 'GET',
             url: '/addfr/' + name,
+            async: false,
             dataType: 'json',
             success: function (data) {
-                var name = data['newuser'].firstname + ' ' + data['newuser'].lastname;
-                if (data['result'] === true) {
+                
+                if (data.result === true) {
+                    var name = data['newuser'].firstname + ' ' + data['newuser'].lastname;
                     $('#add-before').append('You added ' + name + ' before');
                     $('#add-before').show();
                 }
-                else if (data['result'] === false) {
+                else if (data.result === false) {
+                    $('#not-exist').append('Cannot find this user. Please try again.');
                     $('#not-exist').show()
                 }
                 else {
+                    var name = data['newuser'].firstname + ' ' + data['newuser'].lastname;
                     $('#add-success').append('Added ' + name + ' succesfully');
                     loadContact();
                     $('#add-success').show();

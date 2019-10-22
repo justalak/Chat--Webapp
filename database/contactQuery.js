@@ -24,9 +24,11 @@ module.exports={
         var result = {};
         try {
             var add = await db.query('select * from user where username=?', [name]);
-            console.log(add[0][0]);
+            console.log(add[0]);
 
-            if (add[0].length < 1) result['result'] = false;
+            if (add[0].length < 1){
+                result['result']=false;
+            }
             else{
                 var user2_id = add[0][0].user_id;
                 var getContact = await db.query('select * from contact where (user1_id=? and user2_id=?) or(user1_id=? and user2_id=?)',
@@ -38,7 +40,6 @@ module.exports={
                 }
                 result['newuser']=add[0][0];
             }
-
             return result;
         } catch (err) {
             return false;
