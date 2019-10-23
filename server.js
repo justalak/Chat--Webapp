@@ -1,14 +1,14 @@
 var express=require('express');
+var app=express();
+var http=require('http').createServer(app);
 var bodyParser=require('body-parser');
 var loginController=require('./controller/loginController')
 var contactController =require('./controller/contactController');
 var session=require('express-session');
 var cookieParser=require('cookie-parser');
 
-/**
- * Load library
- */
-var app=express();
+//Setup for server
+
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -24,9 +24,7 @@ app.use(session({
     }
 }))
 
-/**
- * Login and register
- */
+//Login and register
 app.use(function(req,res,next){
     if(req.cookies.sid && !req.session.user){
         res.clearCookie('sid');
@@ -61,10 +59,8 @@ app.route('/home').get(async function(req,res){
     }
     else res.redirect('/login');
 })
-/**
- * Contact
- */
+//Contact
 app.route('/addfr/:name').get(contactController.addContact);
 app.route('/getfr').get(contactController.getContact);
 
-app.listen(8080);
+http.listen(8080);

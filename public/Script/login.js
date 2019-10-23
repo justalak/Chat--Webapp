@@ -95,11 +95,12 @@ class User {
                 success: function (data) {
                     debugger
                     if (!data['result']) {
-                        $('.alert-username').show();
+                        $('.alert-danger.alert-username').show();
                         $('#register-loading').hide();
                     }
                     else {
-                        window.location.href = "/login";
+                        $('.alert-success.alert-username').show();
+                        $('#register-loading').hide();
                     }
 
                 },
