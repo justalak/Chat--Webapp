@@ -1,0 +1,10 @@
+#header{
+    height: 20%;
+}
+#profile-img{
+    width: 50px;
+    border-radius: 50%;
+    padding: 3px;
+    border: 2px solid #e74c3c;
+    height: auto;
+}

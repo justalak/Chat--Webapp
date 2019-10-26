@@ -67,21 +67,22 @@ function loadContact() {
             $.each(data, function (index, item) {
                 var name = item['firstname'] + ' ' + item['lastname'];
                 var user_id = item['user_id'];
+                var li= $('<li class="contact" userid="'+user_id+'"></li>');
                 debugger
-                var contact = '<li class="contact ">' +
+                var contact = 
                     '<div class="wrap">'+
                 '<span class="contact-status busy"></span>'+
                 '<img src="../Images/default_avt.png" alt="" />'+
                 '<div class="meta">'+
                 '<p class="name">' + name + '</p>'+
                 '</div>'+
-                '</div>'+
-                '</li>';
-                $('#friend-list ul').append(contact);
+                '</div>';
+                $(li).append(contact);
+                $('#friend-list ul').append(li);
             })
         },
         err:function(){
-
+            
         }
     })
 }
