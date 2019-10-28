@@ -47,6 +47,16 @@ $('.submit').click(function () {
     newMessage();
 });
 
+$('#message').click(function(){
+    $('#friend-list').hide();
+    $('#conversation').show();
+})
+
+$('#contacts').click(function(){
+    $('#friend-list').show();
+    $('#conversation').hide();
+})
+
 $(window).on('keydown', function (e) {
     if (e.which == 13) {
         newMessage();

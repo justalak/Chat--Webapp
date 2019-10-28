@@ -15,7 +15,7 @@ body {
 #frame {
     width: 100%;
     display: flex;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 60px);
 }
 
 @media screen and (max-width: 360px) {
@@ -385,8 +385,9 @@ body {
 }
 #frame #sidepanel .contacts.wrap{
     position: relative;
-    height: calc(100% - 177px);
+    height: calc(100% - 75px);
     margin-top: 1px;
+    width: 104%;
 } 
 #frame #sidepanel #conversation {
     top: 0px;

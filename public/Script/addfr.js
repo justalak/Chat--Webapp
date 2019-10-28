@@ -2,7 +2,7 @@ $(document).ready(function(){
     loadContact();
 })
 
-$('#addcontact').on('click', function () {
+$('#addContact').on('click', function () {
     $('#addfrModal .alert').empty();
     $('#addfrModal .alert').hide();
 })
@@ -31,15 +31,18 @@ function addContact() {
                 
                 if (data.result === true) {
                     var name = data['newuser'].firstname + ' ' + data['newuser'].lastname;
+                    debugger
                     $('#add-before').append('You added ' + name + ' before');
                     $('#add-before').show();
                 }
                 else if (data.result === false) {
                     $('#not-exist').append('Cannot find this user. Please try again.');
+                    debugger
                     $('#not-exist').show()
                 }
                 else {
                     var name = data['newuser'].firstname + ' ' + data['newuser'].lastname;
+                    debugger
                     $('#add-success').append('Added ' + name + ' succesfully');
                     loadContact();
                     $('#add-success').show();
@@ -67,7 +70,7 @@ function loadContact() {
             $.each(data, function (index, item) {
                 var name = item['firstname'] + ' ' + item['lastname'];
                 var user_id = item['user_id'];
-                var li= $('<li class="contact" userid="'+user_id+'"></li>');
+                var li= $('<li class="contact" user_id="'+user_id+'"></li>');
                 debugger
                 var contact = 
                     '<div class="wrap">'+

@@ -1,15 +1,14 @@
 <div id="sidepanel">
-    
+
     <div id="search">
         <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-        <input class="form-control mr-sm-2" type="search" placeholder="Search contact" aria-label="Search">
+        <input type="text" placeholder="Search contacts..." />
     </div>
     <% include ../partial/contact %>
     <div id="bottom-bar">
-        <button id="addcontact" aria-hidden="true" data-toggle="modal" data-target="#addfrModal"><i
-                class="fa fa-user-plus fa-fw"></i> <span>Add 
-                contact</span></button>
-        
-        <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+        <button id="message" aria-hidden="true"><i class="fas fa-comments"></i> <span>Message
+            </span></button>
+
+        <button id="contacts"><i class="fas fa-user" aria-hidden="true"></i> <span>Contacts</span></button>
     </div>
 </div>

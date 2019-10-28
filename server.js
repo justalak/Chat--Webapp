@@ -1,12 +1,15 @@
 var express=require('express');
 var app=express();
+var socketio= require('socket.io')
 var http=require('http').createServer(app);
+var io=socketio(http);
 var bodyParser=require('body-parser');
 var loginController=require('./controller/loginController')
 var contactController =require('./controller/contactController');
+var convesationController=require('./controller/conversationController');
 var session=require('express-session');
 var cookieParser=require('cookie-parser');
-
+var initSocket =require('./socket/index');
 //Setup for server
 
 app.use(express.static(__dirname+'/public'));
@@ -62,5 +65,7 @@ app.route('/home').get(async function(req,res){
 //Contact
 app.route('/addfr/:name').get(contactController.addContact);
 app.route('/getfr').get(contactController.getContact);
-
+//Conversation
+app.route('/getconv').get(convesationController.getConversation);
+initSocket(io);
 http.listen(8080);
