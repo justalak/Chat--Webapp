@@ -13,7 +13,6 @@ module.exports = {
                     result.push({ user: userres[0][0], conv_id: list[i].conv_id })
                 }
             }
-            console.log(result);
             return result;
         } catch (err) {
             console.log(err);

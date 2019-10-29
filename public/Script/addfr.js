@@ -45,6 +45,7 @@ function addContact() {
                     debugger
                     $('#add-success').append('Added ' + name + ' succesfully');
                     loadContact();
+                    loadConversation();
                     $('#add-success').show();
                 }
             },

@@ -393,13 +393,14 @@ body {
     top: 0px;
     width: 100%;
     position: absolute;
-    display: none
+    
 }
 
 #frame #sidepanel #friend-list {
     top: 0px;
     width: 100%;
     position: absolute;
+    display: none
 }
 @media screen and (max-width: 735px) {
     #frame #sidepanel .contacts {
@@ -621,6 +622,7 @@ body {
 @media screen and (min-width: 900px) {
     #frame .content {
         width: calc(100% - 340px);
+        
     }
 }
 
@@ -665,6 +667,7 @@ body {
     max-height: calc(100% - 93px);
     overflow-y: scroll;
     overflow-x: hidden;
+    background-color: #e5ddd5;
 }
 
 @media screen and (max-width: 735px) {

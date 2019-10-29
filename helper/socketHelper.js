@@ -7,9 +7,9 @@ let pushSocketIdToArray = (clients, userId, socketId) => {
     return clients;
   };
   
-  let emitNotifyToArray = (clients, userId, io, eventName, data) => {
+  let emitNotifyToArray = (clients, userId, socket, eventName, data) => {
     clients[userId].forEach(socketId => 
-      io.sockets.connected[socketId].emit(eventName, data)
+      socket.broadcast.to(socketId).emit(eventName, data)
     );
   };
   

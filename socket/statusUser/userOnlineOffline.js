@@ -5,10 +5,10 @@ var userOnlineOffline =(io) =>{
     io.on('connection',function(socket){
         socket.on('connected', (data)=>{
             clients=helper.pushSocketIdToArray(clients,data.user_id,socket.id);
-            console.log(clients);
+           
             socket.on('check-status',()=>{
                 socket.emit('online-list',Object.keys(clients))
-                console.log(Object.keys(clients));
+                
             })
             socket.broadcast.emit('user-online',data.user_id);
             socket.on('disconnect',()=>{
