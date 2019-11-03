@@ -1,0 +1,8 @@
+.marked{
+    color: grey;
+    font-weight: 600;
+}
+.welcome{
+    background: url('../Images/chat-background.png') center ;
+    background-color: #e5ddd5;
+}

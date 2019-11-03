@@ -7,5 +7,9 @@ module.exports={
     },
     addMessage: async(req,res)=>{
         await db.addMessage(req.body.conv_id,req.body.user_send, req.body.content);
+    },
+    getPreview: async(req,res)=>{
+        var preview= await db.getPreviewMessage(req.params.conv_id);
+        res.json(preview);
     }
 }

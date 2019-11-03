@@ -15,7 +15,7 @@ body {
 #frame {
     width: 100%;
     display: flex;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 80px);
 }
 
 @media screen and (max-width: 360px) {
@@ -28,7 +28,7 @@ body {
 #frame #sidepanel {
     
     min-width: 280px;
-    max-width: 340px;
+    max-width: 400px;
     width: 40%;
     height: 100%;
     background: #343a40;
@@ -432,7 +432,9 @@ body {
     padding: 10px 0 15px 0;
     font-size: 0.9em;
     border-radius: 16px;
+    height: 75px;
     cursor: pointer;
+    display: flex;
 }
 
 @media screen and (max-width: 735px) {
@@ -490,7 +492,7 @@ body {
 }
 
 #frame #sidepanel .contacts ul li.contact .wrap img {
-    width: 40px;
+    width: 50px;
     border-radius: 50%;
     float: left;
     margin-right: 10px;
@@ -514,7 +516,7 @@ body {
 
 #frame #sidepanel .contacts ul li.contact .wrap .meta .name {
     font-weight: 600;
-    line-height: 30px;
+    /* line-height: 30px; */
 }
 
 #frame #sidepanel .contacts ul li.contact .wrap .meta .preview {
@@ -524,6 +526,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    
     -moz-transition: 1s all ease;
     -o-transition: 1s all ease;
     -webkit-transition: 1s all ease;
@@ -621,7 +624,7 @@ body {
 
 @media screen and (min-width: 900px) {
     #frame .content {
-        width: calc(100% - 340px);
+        width: calc(100% - 400px);
         
     }
 }
@@ -667,7 +670,7 @@ body {
     max-height: calc(100% - 93px);
     overflow-y: scroll;
     overflow-x: hidden;
-    background-color: #e5ddd5;
+    
 }
 
 @media screen and (max-width: 735px) {

@@ -3,6 +3,20 @@ $(document).ready(function () {
     $('li.contact').on('click', contactOnClick);
 });
 
+function loadPreview(conv_id) {
+    var preview
+    $.ajax({
+        type: "GET",
+        url: "/preview/"+conv_id,
+        async:false,
+        dataType: "json",
+        success: function (response) {
+            preview=response;
+        }
+    });
+    return preview;
+  }
+
 function loadConversation() {
     $('#conversation ul').empty();
     $.ajax({
@@ -11,17 +25,34 @@ function loadConversation() {
         async: false,
         dataType: "json",
         success: function (data) {
-            debugger
+            
             data.forEach(conv => {
+                var preview=loadPreview(conv.conversation.conv_id);
+                var previewMessage,marked,sender;
+                if(!preview){
+                    previewMessage='Send message to '+conv.user.lastname;
+                    marked=0;
+                    sender='';
+                }
+                else {
+                    previewMessage=preview.content;
+                    marked=preview.seen==0?'marked':'';
+                    if(preview.user_send==user_send){
+                        sender='You:';
+                    }
+                    else sender=conv.user.lastname+':';
+                }
+                
+                if(!preview) preview='Send message to '+conv.user.lastname;
                 var name = conv.user.firstname + ' ' + conv.user.lastname;
-                var conversation = '<li class="contact" user_id=' + conv.user.user_id + ' conv_id=' + conv.conv_id + '>' +
+                var conversation = '<li class="contact" user_id=' + conv.user.user_id + ' conv_id=' + conv.conversation.conv_id + '>' +
                     '<div class="wrap">' +
-                    '<span class="contact-status busy"></span>' +
-                    '<img src="../Images/default_avt.png" alt="" />' +
-                    '<div class="meta">' +
-                    '<p class="name">' + name + '</p>' +
-                    '<p class="preview"></p>' +
-                    '</div>' +
+                        '<span class="contact-status busy"></span>' +
+                        '<img src="../Images/default_avt.png" alt="" />' +
+                        '<div class="meta">' +
+                            '<p class="name">' + name +'</p>' +
+                            '<p class="preview"><span>' + sender + ' </span>'+previewMessage+'</p>' +
+                        '</div>' +
                     '</div>' +
                     '</li>';
                 $('#conversation ul').append(conversation);
@@ -30,7 +61,10 @@ function loadConversation() {
     });
 }
 
+
 function contactOnClick() {
+    $(".message-input input").attr('disabled',false);
+    $('.content').removeClass('welcome');
     $(".message-input input").val("");
     if (!$(this).hasClass('active')) {
         $('.active').removeClass('active');

@@ -41,5 +41,6 @@ module.exports= (app)=>{
     app.route('/getconv').get(convesationController.getConversation);
     //Message
     app.route('/getmessage/:conv_id').get(messageController.getMessage);
+    app.route('/preview/:conv_id').get(messageController.getPreview);
     app.route('/sendmessage').post(messageController.addMessage);
 }
