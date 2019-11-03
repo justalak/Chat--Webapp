@@ -31,6 +31,7 @@ function loadConversation() {
 }
 
 function contactOnClick() {
+    $(".message-input input").val("");
     if (!$(this).hasClass('active')) {
         $('.active').removeClass('active');
         $(this).addClass('active');

@@ -16,8 +16,6 @@ var sendReceiveMessage = (io) => {
 
             socket.on('disconnect', () => {
                 clients = helper.removeSocketIdFromArray(clients, data.user_id, socket);
-
-                socket.broadcast.emit('user-offline', data.user_id);
             })
         })
     })

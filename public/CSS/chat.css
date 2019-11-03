@@ -828,3 +828,7 @@ body {
  .online{
     border: 2px solid #2ecc71 !important;
  }
+ 
+ .typing #typing{
+     width: 45px !important;
+ }
