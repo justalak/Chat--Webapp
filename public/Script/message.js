@@ -1,4 +1,5 @@
 var user_send = $('#profile-img').attr('user_id');
+var docHeight = $(document).height();
 
 $('.submit').click(function () {
     newMessage();
@@ -18,6 +19,8 @@ function addMessage(type, message, conv_id, friend_id) {
     var friend = getUser(friend_id);
     var messaging = $('#conversation .contact.active').attr('conv_id');
     var sender;
+    var marked;
+
     if (messaging == conv_id) {
         var typing=$('li.typing');
         $('<li class=' + type + '><img src="../Images/default_avt.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
@@ -25,17 +28,22 @@ function addMessage(type, message, conv_id, friend_id) {
         $('.message-input input').val(null);
     }
     
-    if
-        (type == 'sent') sender = 'You';
-    else
+    if(type == 'sent') {
+        sender = 'You';
+        marked='marked';
+    }
+    else{
         sender = friend.lastname;
-
+        marked='';
+    }
     var conversation = $('.contact[conv_id=' + conv_id + ']');
 
     $('#conversation ul').prepend(conversation);
     $(conversation).find('.preview').html('<span>' + sender + ': </span>' + message);
+    $(conversation).find('.preview').addClass(marked);
     $(conversation).find('.send-time').html('now');
-    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+    $(".messages").animate({ scrollTop: docHeight+93 }, "fast");
+    docHeight
 }
 
 /**

@@ -28,5 +28,18 @@ module.exports={
             console.log(err);
             return false;
         }
+    },
+    readMessage: async (conv_id,user_send)=>{
+        try{
+            var res=await db.query('select * from message where conv_id=? and user_send <>? and seen = 0',[conv_id,user_send]);
+            if(res[0].length >=1) {
+                res[0].forEach(async (message) => {
+                    await db.query('update message set seen=1 where message_id=?',[message.message_id]);
+                });
+            }
+        }catch(err){
+            console.log(err);
+            return false;
+        }
     }
 }

@@ -1,6 +1,6 @@
 .marked{
     color: grey;
-    font-weight: 600;
+   font-weight: 400 !important;
 }
 .welcome{
     background: url('../Images/Bg4.jpg') center ;

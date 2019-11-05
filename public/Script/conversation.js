@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     loadConversation();
     $('li.contact').on('click', contactOnClick);
@@ -16,7 +17,9 @@ function loadPreview(conv_id) {
     });
     return preview;
   }
-
+/**
+ * Hàm thực hiện load danh sách cuộc trò chuyện
+ */
 function loadConversation() {
     $('#conversation ul').empty();
     $.ajax({
@@ -28,21 +31,24 @@ function loadConversation() {
             
             data.forEach(conv => {
                 var preview=loadPreview(conv.conversation.conv_id);
-                var previewMessage,marked,sender;
+                var previewMessage,sender,marked;
                 var time='';
                 if(!preview){
                     previewMessage='Send message to '+conv.user.lastname;
-                    marked=0;
+                    marked='';
                     sender='';
                 }
                 else {
                     previewMessage=preview.content;
                     time=calculateTime(preview.sendtime);
-                    marked=preview.seen==0?'marked':'';
                     if(preview.user_send==user_send){
                         sender='You:';
                     }
                     else sender=conv.user.lastname+':';
+                    if(preview.seen==1 || preview.user_send==user_send){
+                        marked='marked';
+                    }
+                    else marked='';
                 }
                 
                 if(!preview) preview='Send message to '+conv.user.lastname;
@@ -54,7 +60,7 @@ function loadConversation() {
                         '<div class="meta">' +
                             '<p class="name">' + name +'</p>' +
                             '<div class="preview-wrap">'+
-                                '<p class="preview"><span>' + sender + ' </span>'+previewMessage+'</p>' +
+                                '<p class="preview '+marked+ '"><span class="sender">' + sender + ' </span>'+previewMessage+'</p>' +
                                 '<p class="send-time">'+time + '</p>'+
                             '</div>'+
                         '</div>' +
@@ -71,26 +77,34 @@ function contactOnClick() {
     $(".message-input input").attr('disabled',false);
     $('.content').removeClass('welcome');
     $(".message-input input").val("");
+
     if (!$(this).hasClass('active')) {
         $('.contacts .active').removeClass('active');
         $(this).addClass('active');
+        $(this).find('.preview').addClass('marked');
+
         var conv_id = $(this).attr('conv_id');
         var friend_id = $(this).attr('user_id');
-        debugger
+
         loadMessage(conv_id, friend_id);
+        socket.emit('read-message',{conv_id:conv_id,user_send:user_send,user_receive:friend_id});
     }
 }
 
-
+/**
+ * Hàm thực hiện load danh sách tin nhắn
+ */
 
 function loadMessage(conv_id, friend_id) {
     $('.contact-profile .name').empty();
     $('.messages ul').empty();
+
     var friend = getUser(friend_id);
     var list = getMessage(conv_id);
-    debugger
     var user_id = getUserID();
+
     $('.contact-profile .name').append(friend.firstname + " " + friend.lastname);
+
     list.forEach(message => {
         var type;
         if (message.user_send == user_id) {

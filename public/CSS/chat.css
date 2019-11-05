@@ -526,7 +526,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    
+    font-weight: bolder;
     -moz-transition: 1s all ease;
     -o-transition: 1s all ease;
     -webkit-transition: 1s all ease;
@@ -738,7 +738,7 @@ body {
 
 @media screen and (min-width: 735px) {
     #frame .content .messages ul li p {
-        max-width: 300px;
+        max-width: 400px;
     }
 }
 
@@ -843,4 +843,7 @@ body {
  }
  .preview-wrap .send-time{
      opacity: 0.8;
+ }
+ .preview .sender{
+     opacity: 1 !important;
  }

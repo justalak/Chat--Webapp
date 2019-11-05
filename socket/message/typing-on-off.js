@@ -18,7 +18,9 @@ var typingOnOff = (io) => {
             })
             socket.on('disconnect', () => {
                 clients = helper.removeSocketIdFromArray(clients, data.user_id, socket);
-                socket.broadcast.emit('user-offline', data.user_id);
+                if (clients[data.user_receive]) {
+                    helper.emitNotifyToArray(clients, data.user_receive,socket, 'typing-off', data);
+                }
             })
         })
     })
