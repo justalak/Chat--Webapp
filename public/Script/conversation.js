@@ -29,6 +29,7 @@ function loadConversation() {
             data.forEach(conv => {
                 var preview=loadPreview(conv.conversation.conv_id);
                 var previewMessage,marked,sender;
+                var time='';
                 if(!preview){
                     previewMessage='Send message to '+conv.user.lastname;
                     marked=0;
@@ -36,6 +37,7 @@ function loadConversation() {
                 }
                 else {
                     previewMessage=preview.content;
+                    time=calculateTime(preview.sendtime);
                     marked=preview.seen==0?'marked':'';
                     if(preview.user_send==user_send){
                         sender='You:';
@@ -51,7 +53,10 @@ function loadConversation() {
                         '<img src="../Images/default_avt.png" alt="" />' +
                         '<div class="meta">' +
                             '<p class="name">' + name +'</p>' +
-                            '<p class="preview"><span>' + sender + ' </span>'+previewMessage+'</p>' +
+                            '<div class="preview-wrap">'+
+                                '<p class="preview"><span>' + sender + ' </span>'+previewMessage+'</p>' +
+                                '<p class="send-time">'+time + '</p>'+
+                            '</div>'+
                         '</div>' +
                     '</div>' +
                     '</li>';
@@ -67,7 +72,7 @@ function contactOnClick() {
     $('.content').removeClass('welcome');
     $(".message-input input").val("");
     if (!$(this).hasClass('active')) {
-        $('.active').removeClass('active');
+        $('.contacts .active').removeClass('active');
         $(this).addClass('active');
         var conv_id = $(this).attr('conv_id');
         var friend_id = $(this).attr('user_id');

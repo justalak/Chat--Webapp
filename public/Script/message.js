@@ -34,7 +34,7 @@ function addMessage(type, message, conv_id, friend_id) {
 
     $('#conversation ul').prepend(conversation);
     $(conversation).find('.preview').html('<span>' + sender + ': </span>' + message);
-
+    $(conversation).find('.send-time').html('now');
     $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 }
 

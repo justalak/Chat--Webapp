@@ -3,6 +3,10 @@
     font-weight: 600;
 }
 .welcome{
-    background: url('../Images/chat-background.png') center ;
+    background: url('../Images/Bg4.jpg') center ;
+    background-size: cover;
     background-color: #e5ddd5;
+}
+.time{
+    float: right;
 }

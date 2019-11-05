@@ -39,8 +39,8 @@ module.exports= (app)=>{
     app.route('/getfr').get(contactController.getContact);
     //Conversation
     app.route('/getconv').get(convesationController.getConversation);
+    app.route('/preview/:conv_id').get(messageController.getPreview);
     //Message
     app.route('/getmessage/:conv_id').get(messageController.getMessage);
-    app.route('/preview/:conv_id').get(messageController.getPreview);
     app.route('/sendmessage').post(messageController.addMessage);
 }
