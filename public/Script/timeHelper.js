@@ -18,7 +18,10 @@ function monthToString(month) {
 function calculateTime(dateTime) {
     var now=new Date();
     var time=new Date(dateTime);
-    if(now.getDay()==time.getDay()&& now.getMonth()==time.getMonth())
-        return time.getHours()+':'+time.getMinutes();
+    if(now.getDay()==time.getDay()&& now.getMonth()==time.getMonth()){
+        var hours=time.getHours()<10?'0'+time.getHours():time.getHours();
+        var minutes=time.getMinutes()<10?'0'+time.getMinutes():time.getMinutes();
+        return hours+':'+minutes;
+    }
     else return monthToString(time.getMonth())+' '+time.getDate();
 }

@@ -19,7 +19,6 @@ function addMessage(type, message, conv_id, friend_id) {
     var friend = getUser(friend_id);
     var messaging = $('#conversation .contact.active').attr('conv_id');
     var sender;
-    var marked;
 
     if (messaging == conv_id) {
         var typing=$('li.typing');
@@ -30,20 +29,22 @@ function addMessage(type, message, conv_id, friend_id) {
     
     if(type == 'sent') {
         sender = 'You';
-        marked='marked';
+        
     }
     else{
         sender = friend.lastname;
-        marked='';
+       
     }
     var conversation = $('.contact[conv_id=' + conv_id + ']');
 
     $('#conversation ul').prepend(conversation);
     $(conversation).find('.preview').html('<span>' + sender + ': </span>' + message);
-    $(conversation).find('.preview').addClass(marked);
+    if(type=='sent'){
+        $(conversation).find('.preview').addClass('marked');
+    }
     $(conversation).find('.send-time').html('now');
     $(".messages").animate({ scrollTop: docHeight+93 }, "fast");
-    docHeight
+    docHeight+=93;
 }
 
 /**
@@ -88,7 +89,7 @@ socket.on('typing-on', (data) => {
         if (!$('.messages li:last-child').hasClass('typing')) {
             var typing = '<img id="typing" src="../../Images/typing.gif"></img>';
             $('<li class="replies typing"><img src="../Images/default_avt.png" alt="" /><p>' + typing + '</p></li>').appendTo($('.messages ul'));
-            $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+            $(".messages").animate({ scrollTop: docHeight+93 }, "fast");
         }
     }
 })

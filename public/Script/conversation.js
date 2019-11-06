@@ -76,6 +76,8 @@ function loadConversation() {
 function contactOnClick() {
     $(".message-input input").attr('disabled',false);
     $('.content').removeClass('welcome');
+    $('#load-message').show();
+    $(".messages").animate({ scrollTop: docHeight+93 }, "fast");
     $(".message-input input").val("");
 
     if (!$(this).hasClass('active')) {

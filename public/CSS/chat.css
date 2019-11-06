@@ -847,3 +847,10 @@ body {
  .preview .sender{
      opacity: 1 !important;
  }
+ #load-message{
+    display: none;
+    cursor: pointer;
+ }
+ #load-message:hover{
+    text-decoration: underline;
+ }
