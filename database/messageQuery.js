@@ -11,9 +11,10 @@ module.exports={
             return false;
         }
     },
-    getMessage: async(conv_id)=>{
+    getMessage: async(conv_id,page)=>{
         try{
-            var res=await db.query('select * from message where conv_id=? order by sendtime',[conv_id])
+            var offset=(page-1)*10;
+            var res=await db.query('select * from message where conv_id=? order by sendtime desc limit ?,?',[conv_id,offset,10])
             return res[0];
         }catch(err){
             console.log(err);

@@ -41,6 +41,8 @@ module.exports= (app)=>{
     app.route('/getconv').get(convesationController.getConversation);
     app.route('/preview/:conv_id').get(messageController.getPreview);
     //Message
-    app.route('/getmessage/:conv_id').get(messageController.getMessage);
+    app.route('/getmessage/:conv_id/:page').get(messageController.getMessage);
     app.route('/sendmessage').post(messageController.addMessage);
+    //UpdateProfie
+    app.route('/upload').post(userController.updateProfile);
 }

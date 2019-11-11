@@ -8,15 +8,15 @@ function loadPreview(conv_id) {
     var preview
     $.ajax({
         type: "GET",
-        url: "/preview/"+conv_id,
-        async:false,
+        url: "/preview/" + conv_id,
+        async: false,
         dataType: "json",
         success: function (response) {
-            preview=response;
+            preview = response;
         }
     });
     return preview;
-  }
+}
 /**
  * Hàm thực hiện load danh sách cuộc trò chuyện
  */
@@ -28,42 +28,45 @@ function loadConversation() {
         async: false,
         dataType: "json",
         success: function (data) {
-            
+
             data.forEach(conv => {
-                var preview=loadPreview(conv.conversation.conv_id);
-                var previewMessage,sender,marked;
-                var time='';
-                if(!preview){
-                    previewMessage='Send message to '+conv.user.lastname;
-                    marked='';
-                    sender='';
+                var conv_id = conv.conversation.conv_id;
+                pageNumber[conv_id] = 1;
+
+                var preview = loadPreview(conv_id);
+                var previewMessage, sender, marked;
+                var time = '';
+                if (!preview) {
+                    previewMessage = 'Send message to ' + conv.user.lastname;
+                    marked = '';
+                    sender = '';
                 }
                 else {
-                    previewMessage=preview.content;
-                    time=calculateTime(preview.sendtime);
-                    if(preview.user_send==user_send){
-                        sender='You:';
+                    previewMessage = preview.content;
+                    time = calculateTime(preview.sendtime);
+                    if (preview.user_send == user_send) {
+                        sender = 'You:';
                     }
-                    else sender=conv.user.lastname+':';
-                    if(preview.seen==1 || preview.user_send==user_send){
-                        marked='marked';
+                    else sender = conv.user.lastname + ':';
+                    if (preview.seen == 1 || preview.user_send == user_send) {
+                        marked = 'marked';
                     }
-                    else marked='';
+                    else marked = '';
                 }
-                
-                if(!preview) preview='Send message to '+conv.user.lastname;
+
+                if (!preview) preview = 'Send message to ' + conv.user.lastname;
                 var name = conv.user.firstname + ' ' + conv.user.lastname;
                 var conversation = '<li class="contact" user_id=' + conv.user.user_id + ' conv_id=' + conv.conversation.conv_id + '>' +
                     '<div class="wrap">' +
-                        '<span class="contact-status busy"></span>' +
-                        '<img src="../Images/default_avt.png" alt="" />' +
-                        '<div class="meta">' +
-                            '<p class="name">' + name +'</p>' +
-                            '<div class="preview-wrap">'+
-                                '<p class="preview '+marked+ '"><span class="sender">' + sender + ' </span>'+previewMessage+'</p>' +
-                                '<p class="send-time">'+time + '</p>'+
-                            '</div>'+
-                        '</div>' +
+                    '<span class="contact-status busy"></span>' +
+                    '<img src="' + conv.user.profile_img + '" alt="" />' +
+                    '<div class="meta">' +
+                    '<p class="name">' + name + '</p>' +
+                    '<div class="preview-wrap">' +
+                    '<p class="preview ' + marked + '"><span class="sender">' + sender + ' </span>' + previewMessage + '</p>' +
+                    '<p class="send-time">' + time + '</p>' +
+                    '</div>' +
+                    '</div>' +
                     '</div>' +
                     '</li>';
                 $('#conversation ul').append(conversation);
@@ -74,22 +77,31 @@ function loadConversation() {
 
 
 function contactOnClick() {
-    $(".message-input input").attr('disabled',false);
+    var conv_id = $(this).attr('conv_id');
+    var friend_id = $(this).attr('user_id');
+    var friend = getUser(friend_id);
+
+    $(".message-input input").attr('disabled', false);
     $('.content').removeClass('welcome');
-    $('#load-message').show();
-    $(".messages").animate({ scrollTop: docHeight+93 }, "fast");
+    $('.contact-profile .name').empty();
+
+    $(".messages").animate({ scrollTop: docHeight + 93 }, "fast");
     $(".message-input input").val("");
+    $('.contact-profile .name').append(friend.firstname + " " + friend.lastname);
+    $('#friendImg').attr('src', friend.profile_img);
 
     if (!$(this).hasClass('active')) {
         $('.contacts .active').removeClass('active');
+        $('.messages ul').empty();
+        $('#load-message').show();
         $(this).addClass('active');
         $(this).find('.preview').addClass('marked');
 
-        var conv_id = $(this).attr('conv_id');
-        var friend_id = $(this).attr('user_id');
+        pageNumber[conv_id]=1;
 
-        loadMessage(conv_id, friend_id);
-        socket.emit('read-message',{conv_id:conv_id,user_send:user_send,user_receive:friend_id});
+        loadMessage(conv_id, friend_id, 1);
+
+        socket.emit('read-message', { conv_id: conv_id, user_send: user_send, user_receive: friend_id });
     }
 }
 
@@ -97,24 +109,25 @@ function contactOnClick() {
  * Hàm thực hiện load danh sách tin nhắn
  */
 
-function loadMessage(conv_id, friend_id) {
-    $('.contact-profile .name').empty();
-    $('.messages ul').empty();
+function loadMessage(conv_id, friend_id, page) {
 
     var friend = getUser(friend_id);
-    var list = getMessage(conv_id);
+    var list = getMessage(conv_id, page);
+
     var user_id = getUserID();
 
-    $('.contact-profile .name').append(friend.firstname + " " + friend.lastname);
-
     list.forEach(message => {
-        var type;
+        var type, imgUrl;
         if (message.user_send == user_id) {
-            type = 'sent'
+            type = 'sent';
+            imgUrl = me.profile_img;
         }
-        else type = 'replies';
-        $('.messages ul').append('<li class=' + type + '>' +
-            '<img src="../Images/default_avt.png" alt="" />' +
+        else {
+            type = 'replies';
+            imgUrl = friend.profile_img;
+        }
+        $('.messages ul').prepend('<li class=' + type + '>' +
+            '<img src="' + imgUrl + '" class="profile-img" />' +
             '<p>' + message.content + '</p>' +
             '</li>')
     });

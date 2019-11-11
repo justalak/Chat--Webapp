@@ -9,5 +9,14 @@ module.exports={
             console.log(err);
             return false
         }
+    },
+    updateProfile: async (user_id,img_url)=>{
+        try{
+            await db.query('update user set profile_img=? where user_id=?',[img_url,user_id]);
+            return true;
+        }catch(err){
+            console.log(err);
+            return false;
+        }
     }
 }

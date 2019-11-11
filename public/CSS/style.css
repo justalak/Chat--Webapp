@@ -10,3 +10,15 @@
 .time{
     float: right;
 }
+.messages .profile-img{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+#loading{
+    height: 30px;
+    width: 100%;
+    background: url(../Images/loading-message.gif) center no-repeat;
+    background-size: 30px;
+    display: none;
+}
