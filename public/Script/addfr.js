@@ -71,12 +71,13 @@ function loadContact() {
             $.each(data, function (index, item) {
                 var name = item['firstname'] + ' ' + item['lastname'];
                 var user_id = item['user_id'];
+                var profileURL=item.profile_img;
                 var li= $('<li class="contact" user_id="'+user_id+'"></li>');
                 debugger
                 var contact = 
                     '<div class="wrap">'+
                 '<span class="contact-status busy"></span>'+
-                '<img src="../Images/default_avt.png" alt="" />'+
+                '<img src="'+profileURL+'" alt="" />'+
                 '<div class="meta">'+
                 '<p class="name">' + name + '</p>'+
                 '</div>'+

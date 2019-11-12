@@ -1,8 +1,8 @@
-var contactController =require('./controller/contactController');
-var convesationController=require('./controller/conversationController');
-var userController=require('./controller/userController');
-var loginController=require('./controller/loginController')
-var messageController=require('./controller/messageController') 
+var contactController =require('../controller/contactController');
+var convesationController=require('../controller/conversationController');
+var userController=require('../controller/userController');
+var loginController=require('../controller/loginController')
+var messageController=require('../controller/messageController') 
 
 module.exports= (app)=>{
     app.get('/',function(req,res,next){
@@ -14,7 +14,7 @@ module.exports= (app)=>{
                 res.redirect('/home');
             }
             else{
-                res.sendFile(__dirname+'/public/login.html');
+                res.render('login');
             }
         });
     app.route('/register').post(loginController.register);
@@ -27,7 +27,7 @@ module.exports= (app)=>{
     app.route('/get')
     app.route('/home').get(async function(req,res){
         if(req.cookies.sid && req.session.user){
-            res.render(__dirname+'/public/view/chat-window.ejs',{
+            res.render('chat-window',{
                 user: req.session.user
             });
             

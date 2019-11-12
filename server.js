@@ -9,7 +9,7 @@ var contactController =require('./controller/contactController');
 var convesationController=require('./controller/conversationController');
 var userController=require('./controller/userController');
 var session=require('express-session');
-var route=require('./route');
+var route=require('./routes/route');
 var cookieParser=require('cookie-parser');
 var initSocket =require('./socket/index');
 //Setup for server
