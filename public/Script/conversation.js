@@ -81,7 +81,7 @@ function contactOnClick() {
     var friend_id = $(this).attr('user_id');
     var friend = getUser(friend_id);
 
-    $(".message-input input").attr('disabled', false);
+    $(".message-input").show();
     $('.content').removeClass('welcome');
     $('.contact-profile .name').empty();
 

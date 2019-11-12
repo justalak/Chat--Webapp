@@ -17,6 +17,7 @@ $('#load-message').on('click',function(){
 
 $(window).on('keydown', function (e) {
     if (e.which == 13) {
+        
         newMessage();
         return false;
     }
@@ -68,7 +69,8 @@ function addMessage(type, message, conv_id, friend_id) {
  * Hàm thực hiện gửi tin nhắn
  */
 function newMessage() {
-    message = $(".message-input input").val();
+    message = emoji[0].emojioneArea.getText();
+    emoji[0].emojioneArea.setText("");
 
     if ($.trim(message) == '') {
         return false;
@@ -92,16 +94,16 @@ socket.on('new-message', function (message) {
     }
 })
 
-$(".message-input input").on('keypress', function () {
+emoji[0].emojioneArea.on('focus', function () {
     var user_receive = $('#conversation ul li.active').attr('user_id');
     var conv_id = $('#conversation ul li.active').attr('conv_id');
-
+    
     socket.emit('typing-on', { user_send: user_send, user_receive: user_receive, conv_id: conv_id });
 })
 
 
 
-$(".message-input input").on('blur', function () {
+emoji[0].emojioneArea.on('blur', function () {
     var user_receive = $('#conversation ul li.active').attr('user_id');
     var conv_id = $('#conversation ul li.active').attr('conv_id');
 

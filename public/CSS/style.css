@@ -1,24 +1,44 @@
-.marked{
+.marked {
     color: grey;
-   font-weight: 400 !important;
+    font-weight: 400 !important;
 }
-.welcome{
-    background: url('../Images/Bg4.jpg') center ;
+
+.welcome {
+    background: url('../Images/Bg4.jpg') center;
     background-size: cover;
     background-color: #e5ddd5;
 }
-.time{
+
+.time {
     float: right;
 }
-.messages .profile-img{
+
+.messages .profile-img {
     width: 22px;
     height: 22px;
     border-radius: 50%;
 }
-#loading{
+
+#loading {
     height: 30px;
     width: 100%;
     background: url(../Images/loading-message.gif) center no-repeat;
     background-size: 30px;
     display: none;
+}
+
+#emoji-container {
+    float: left;
+    border: none;
+    width: calc(100% - 90px);
+    background-color: #f1f0f0;
+    border-radius: 10px;
+    font-size: 0.8em;
+    color: #32465a;
+}
+
+#emoji-container .emojionearea {
+    height: 36px;
+    border-radius: 10px;
+    background-color: #f1f0f9;
 }

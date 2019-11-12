@@ -38,38 +38,6 @@ app.use(function(req,res,next){
 })
 route(app);
 
-// app.get('/',function(req,res,next){
-//     res.redirect('/login');
-// })
-// app.route('/login').post(loginController.login)
-//     .get(function(req,res){
-//         if(req.cookies && req.session.user){
-//             res.redirect('/home');
-//         }
-//         else{
-//             res.sendFile(__dirname+'/public/login.html');
-//         }
-//     });
-// app.route('/register').post(loginController.register);
-// app.route('/logout').get(function(erq,res){
-//     res.clearCookie('sid');
-    
-//     res.redirect('/login');
-// })
-// app.route('/getuser/:user_id').get(userController.getUser);
-// app.route('/home').get(async function(req,res){
-//     if(req.cookies.sid && req.session.user){
-//         res.render(__dirname+'/public/view/chat-window.ejs',{
-//             user: req.session.user
-//         });
-        
-//     }
-//     else res.redirect('/login');
-// })
-// //Contact
-// app.route('/addfr/:name').get(contactController.addContact);
-// app.route('/getfr').get(contactController.getContact);
-// //Conversation
-// app.route('/getconv').get(convesationController.getConversation);
+
 initSocket(io);
 http.listen(8080);

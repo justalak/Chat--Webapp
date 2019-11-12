@@ -67,7 +67,7 @@ $('#saveInfo').on('click',function(){
     var formData=new FormData();
     var file=files[0];
     formData.append('file',file,file.name);
-    debugger
+    
     $.ajax({
         type: "POST",
         url: "/upload",
@@ -75,7 +75,7 @@ $('#saveInfo').on('click',function(){
         processData:false,
         contentType: false,
         success: function (response) {
-            debugger
+            
             $('.profile-alert').show();
         }
     });

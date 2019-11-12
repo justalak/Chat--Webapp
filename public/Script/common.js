@@ -1,6 +1,15 @@
+window.emojioneVersion = "3.1.2";
+
 var messPerPage=20;
 var pageNumber={};
-
+var emoji=$("#type-input").emojioneArea({
+    pickerPosition: "top",
+    filtersPosition: "bottom",
+   container: '#emoji-container',
+});
+$(document).ready(function () {
+  
+});
 var me=getUser($('#profile-img').attr('user_id'));
 
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");

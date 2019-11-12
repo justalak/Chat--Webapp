@@ -746,8 +746,10 @@ body {
 #frame .content .message-input {
     position: absolute;
     bottom: 0;
+    background: white;
     width: 100%;
     z-index: 99;
+    display: none;
 }
 
 #frame .content .message-input .wrap {
