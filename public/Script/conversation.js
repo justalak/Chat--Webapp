@@ -42,7 +42,12 @@ function loadConversation() {
                     sender = '';
                 }
                 else {
-                    previewMessage = preview.content;
+                    if(preview.type!='text'){
+                        previewMessage='Sent an attachment';
+                    }
+                    else{
+                        previewMessage = preview.content;
+                    }
                     time = calculateTime(preview.sendtime);
                     if (preview.user_send == user_send) {
                         sender = 'You:';
@@ -100,7 +105,7 @@ function contactOnClick() {
         pageNumber[conv_id]=1;
 
         loadMessage(conv_id, friend_id, 1);
-
+         $(".messages").animate({ scrollTop: docHeight * 2 + 93 }, "fast");
         socket.emit('read-message', { conv_id: conv_id, user_send: user_send, user_receive: friend_id });
     }
 }
@@ -120,16 +125,29 @@ function loadMessage(conv_id, friend_id, page) {
         var type, imgUrl;
         if (message.user_send == user_id) {
             type = 'sent';
-            imgUrl = me.profile_img;
         }
         else {
             type = 'replies';
-            imgUrl = friend.profile_img;
+        }
+
+        var sender=getUser(message.user_send);
+        imgUrl=sender.profile_img;
+        var content;
+
+        if(message.type=='text'){
+            content='<p>' + message.content + '</p>';
+        }
+        else if(message.type=='image'){
+            content='<img src="'+message.filepath+'" class="img-attachment" />';
+        }
+        else{
+            content='<p><a href="'+message.filepath+'" title="'+message.content+'" >'+message.content+'</a></p>';
         }
         $('.messages ul').prepend('<li class=' + type + '>' +
-            '<img src="' + imgUrl + '" class="profile-img" />' +
-            '<p>' + message.content + '</p>' +
+            '<img src="' + imgUrl + '" class="profile-img" />' + content+
+         
             '</li>')
+        
     });
 }
 

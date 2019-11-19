@@ -58,11 +58,11 @@ $('#contacts').click(function(){
 })
 
 $(window).on('keydown', function (e) {
-    debugger
+    
     if (e.which == 13) {
-        debugger
+        
         newMessage();
-        debugger
+        
         return false;
     }
 });

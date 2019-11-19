@@ -20,7 +20,7 @@ function addContact() {
     var name = $('#addfr-input').val();
     $('#addfrModal .alert').empty();
     $('#addfrModal .alert').hide();
-    debugger
+    
     if (name) {
         $.ajax({
             method: 'GET',
@@ -31,18 +31,18 @@ function addContact() {
                 
                 if (data.result === true) {
                     var name = data['newuser'].firstname + ' ' + data['newuser'].lastname;
-                    debugger
+                    
                     $('#add-before').append('You added ' + name + ' before');
                     $('#add-before').show();
                 }
                 else if (data.result === false) {
                     $('#not-exist').append('Cannot find this user. Please try again.');
-                    debugger
+                    
                     $('#not-exist').show()
                 }
                 else {
                     var name = data['newuser'].firstname + ' ' + data['newuser'].lastname;
-                    debugger
+                    
                     $('#add-success').append('Added ' + name + ' succesfully');
                     loadContact();
                     loadConversation();
@@ -73,7 +73,7 @@ function loadContact() {
                 var user_id = item['user_id'];
                 var profileURL=item.profile_img;
                 var li= $('<li class="contact" user_id="'+user_id+'"></li>');
-                debugger
+                
                 var contact = 
                     '<div class="wrap">'+
                 '<span class="contact-status busy"></span>'+

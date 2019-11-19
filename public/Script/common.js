@@ -1,16 +1,15 @@
 window.emojioneVersion = "3.1.2";
+const MAX_SIZE = 1024 * 1024 * 2;
 
-var messPerPage=20;
-var pageNumber={};
-var emoji=$("#type-input").emojioneArea({
+var messPerPage = 20;
+var pageNumber = {};
+var emoji = $("#type-input").emojioneArea({
     pickerPosition: "top",
     filtersPosition: "bottom",
-   container: '#emoji-container',
+    container: '#emoji-container',
 });
-$(document).ready(function () {
-  
-});
-var me=getUser($('#profile-img').attr('user_id'));
+
+var me = getUser($('#profile-img').attr('user_id'));
 
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
@@ -26,39 +25,52 @@ $(".expand-button").click(function () {
 
 
 
-$('#message').click(function(){
+$('#message').click(function () {
     $('#friend-list').hide();
     $('#conversation').show();
 })
 
-$('#contacts').click(function(){
+$('#contacts').click(function () {
     $('#friend-list').show();
     $('#conversation').hide();
 })
 
+$('#file-input').on('change', function () {
+    var file = $('#file-input').get(0).files[0];
+    if (file.size > MAX_SIZE) {
+        $('#fileAlert').modal({
+            keyboard: false,
+            show:true,
+          })
+        $('#file-input').val(null);
+    }
+    else {
+        $('#new-file').show();
+    }
+})
 
 function getUserID() {
     return $('#profile-img').attr('user_id');
 }
 
-function getMessage(conv_id,page) {
+function getMessage(conv_id, page) {
     var result;
     $('#loading').show();
-    
+
     $.ajax({
         type: "GET",
-        url: "/getmessage/"+conv_id+"/"+page,
+        url: "/getmessage/" + conv_id + "/" + page,
         dataType: "json",
         async: false,
         success: function (response) {
-           result=response;
-           if(response.length<10){
-               $('#load-message').hide();
-           }
-           else  pageNumber[conv_id]+=1;
+            result = response;
+            if (response.length < 10) {
+                $('#load-message').hide();
+            }
+            else pageNumber[conv_id] += 1;
         }
     });
-   $('#loading').hide();
+    $('#loading').hide();
     return result;
 }
 
@@ -66,13 +78,13 @@ function getUser(user_id) {
     var result;
     $.ajax({
         type: "GET",
-        url: "/getuser/"+user_id,
+        url: "/getuser/" + user_id,
         dataType: "json",
         async: false,
         success: function (response) {
-           result=response;
+            result = response;
         },
-        error: function(err){
+        error: function (err) {
             return err;
         }
     });

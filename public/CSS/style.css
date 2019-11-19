@@ -42,3 +42,6 @@
     border-radius: 10px;
     background-color: #f1f0f9;
 }
+.img-attachment{
+    max-width: 450px;
+}

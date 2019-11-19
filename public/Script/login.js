@@ -38,7 +38,7 @@ class User {
                     }
                 },
                 error: function (err) {
-                    debugger
+                    
                     alert(err);
                 }
             })
@@ -80,7 +80,7 @@ class User {
         });
         var gender = $('#gender').find(':selected').text();
         data['gender']=gender;
-        debugger
+        
         if (this.checkRegister() ) {
             $.ajax({
                 method: 'POST',
@@ -93,7 +93,7 @@ class User {
                     
                 },
                 success: function (data) {
-                    debugger
+                    
                     if (!data['result']) {
                         $('.alert-danger.alert-username').show();
                         $('#register-loading').hide();
@@ -105,7 +105,7 @@ class User {
 
                 },
                 error: function (err) {
-                    debugger
+                    
                     alert(err);
                 }
             })

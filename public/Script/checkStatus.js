@@ -5,7 +5,7 @@ socket.emit('connected', { user_id: user_id });
 socket.emit('check-status');
 
 socket.on('online-list', function (listid) {
-    debugger
+    
     listid.forEach(user_id => {
         var friend = $('.contact[user_id=' + user_id + ']').find('.contact-status');
         $(friend).removeClass('busy');

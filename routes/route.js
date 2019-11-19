@@ -43,6 +43,7 @@ module.exports= (app)=>{
     //Message
     app.route('/getmessage/:conv_id/:page').get(messageController.getMessage);
     app.route('/sendmessage').post(messageController.addMessage);
+    app.route('/sendattachment/:conv_id/:user_send').post(messageController.addAttachment);
     //UpdateProfie
     app.route('/upload').post(userController.updateProfile);
 }

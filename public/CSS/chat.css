@@ -778,15 +778,20 @@ body {
 
 #frame .content .message-input .wrap .attachment {
     position: absolute;
-    right: 60px;
+    /* right: 40px; */
+    left: 12px;
     z-index: 4;
-    margin-top: 10px;
+    
     font-size: 1.1em;
     color: #435f7a;
     opacity: .5;
     cursor: pointer;
 }
-
+#new-file{
+    position: absolute;
+    top: -13px;
+    
+}
 @media screen and (max-width: 735px) {
     #frame .content .message-input .wrap .attachment {
         margin-top: 17px;

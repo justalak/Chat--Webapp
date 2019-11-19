@@ -19,6 +19,11 @@ var sendReceiveMessage = (io) => {
                     helper.emitNotifyToArray(clients, data.user_receive,socket, 'read-message', data)
                 }
             })
+            socket.on('new-file',(data)=>{
+                if (clients[data.user_receive]) {
+                    helper.emitNotifyToArray(clients, data.user_receive,socket, 'new-file', data);
+                }
+            })
             socket.on('disconnect', () => {
                 clients = helper.removeSocketIdFromArray(clients, data.user_id, socket);
             })

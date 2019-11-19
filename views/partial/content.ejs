@@ -12,8 +12,12 @@
     <div class="message-input">
         <div class="input-wrap wrap">
             <input type="text" id="type-input" placeholder="Write your message..."/>
+            <input type="file" name="file-input" id="file-input" style="display:none" />
             <div id="emoji-container"></div>
-            <i class="fas fa-paperclip attachment"></i>
+            <label for="file-input" style="position: relative;">
+                <i  class="fas fa-paperclip attachment"></i>
+                <span id="new-file" class="badge badge-pill badge-danger" style="display:none">1</span>
+            </label>
             <button class="submit"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
