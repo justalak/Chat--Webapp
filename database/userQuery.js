@@ -10,6 +10,15 @@ module.exports={
             return false
         }
     },
+    getInfor: async(username)=>{
+        try{
+            var res=await db.query('select * from user where username=?',[username]);
+            return res[0][0];
+            }catch(err){
+                console.log(err);
+                return false
+            }
+    },
     updateProfile: async (user_id,img_url)=>{
         try{
             await db.query('update user set profile_img=? where user_id=?',[img_url,user_id]);

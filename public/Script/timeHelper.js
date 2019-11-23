@@ -1,5 +1,5 @@
 function monthToString(month) {
-    switch(month){
+    switch (month) {
         case 0: return 'Jan';
         case 1: return 'Feb';
         case 2: return 'Mar';
@@ -16,12 +16,38 @@ function monthToString(month) {
 }
 
 function calculateTime(dateTime) {
-    var now=new Date();
-    var time=new Date(dateTime);
-    if(now.getDay()==time.getDay()&& now.getMonth()==time.getMonth()){
-        var hours=time.getHours()<10?'0'+time.getHours():time.getHours();
-        var minutes=time.getMinutes()<10?'0'+time.getMinutes():time.getMinutes();
-        return hours+':'+minutes;
+    var now = new Date();
+    var time = new Date(dateTime);
+    if (now.getDay() == time.getDay() && now.getMonth() == time.getMonth()) {
+        var hours = time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
+        var minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
+        return hours + ':' + minutes;
     }
-    else return monthToString(time.getMonth())+' '+time.getDate();
+    else return monthToString(time.getMonth()) + ' ' + time.getDate();
+}
+
+function formatDate(today) {
+    var today = new Date();
+    var day = today.getDate() + "";
+    var month = (today.getMonth() + 1) + "";
+    var year = today.getFullYear() + "";
+    var hour = today.getHours() + "";
+    var minutes = today.getMinutes() + "";
+    var seconds = today.getSeconds() + "";
+
+    day = checkZero(day);
+    month = checkZero(month);
+    year = checkZero(year);
+    hour = checkZero(hour);
+    mintues = checkZero(minutes);
+    seconds = checkZero(seconds);
+
+   return (day + "/" + month + "/" + year + " " + hour + ":" + minutes );
+
+}
+function checkZero(data) {
+    if (data.length == 1) {
+        data = "0" + data;
+    }
+    return data;
 }

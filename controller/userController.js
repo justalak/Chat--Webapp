@@ -7,6 +7,10 @@ module.exports={
         var user= await db.getUser(req.params.user_id);
         res.json(user);
     },
+    getInfor:async(req,res)=>{
+        var user= await db.getInfor(req.params.username);
+        res.json(user);
+    },
     updateProfile:(req,res)=>{
         var user_id=req.session.user.user_id;
 

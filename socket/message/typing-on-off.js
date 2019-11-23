@@ -7,20 +7,24 @@ var typingOnOff = (io) => {
         socket.on('connected', (data) => {
             clients = helper.pushSocketIdToArray(clients, data.user_id, socket.id);
             socket.on('typing-on', (data) => {
-                if (clients[data.user_receive]) {
-                    helper.emitNotifyToArray(clients, data.user_receive,socket, 'typing-on', data);
-                }
+                var friends=data.user_receive;
+                friends.forEach(friend_id => {
+                    if (clients[friend_id]) {
+                        helper.emitNotifyToArray(clients, friend_id,socket, 'typing-on', data)
+                    }
+                });
             })
             socket.on('typing-off',(data)=>{
-                if (clients[data.user_receive]) {
-                    helper.emitNotifyToArray(clients, data.user_receive,socket, 'typing-off', data);
-                }
+                var friends=data.user_receive;
+                friends.forEach(friend_id => {
+                    if (clients[friend_id]) {
+                        helper.emitNotifyToArray(clients, friend_id,socket, 'typing-off', data)
+                    }
+                });
             })
             socket.on('disconnect', () => {
                 clients = helper.removeSocketIdFromArray(clients, data.user_id, socket);
-                if (clients[data.user_receive]) {
-                    helper.emitNotifyToArray(clients, data.user_receive,socket, 'typing-off', data);
-                }
+               
             })
         })
     })

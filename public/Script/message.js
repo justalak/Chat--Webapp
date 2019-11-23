@@ -9,9 +9,9 @@ $('.submit').click(function () {
 
 $('#load-message').on('click', function () {
     var messaging = $('#conversation .contact.active').attr('conv_id');
-    var friend_id = $('#conversation .contact.active').attr('user_id');
+    
 
-    loadMessage(messaging, friend_id, pageNumber[messaging]);
+    loadMessage(messaging,  pageNumber[messaging]);
     // $(".messages").animate({ scrollTop: docHeight }, 200);
      docHeight += 93 * 10;
 })
@@ -72,11 +72,10 @@ function newMessage() {
     message = emoji[0].emojioneArea.getText();
     emoji[0].emojioneArea.setText("");
     var files = $('#file-input').get(0).files;
-    debugger
     //$('#file-input').val(null);
     $('#new-file').hide();
 
-    var user_receive = $('#conversation li.active').attr('user_id');
+    var user_receive = $('#conversation li.active').data('friends_id');
     var conv_id = $('#conversation li.active').attr('conv_id');
 
     if (files.length > 0) {
@@ -88,7 +87,7 @@ function newMessage() {
     addMessage('sent', message, conv_id);
 
     socket.emit('new-message', { user_send: user_send, user_receive: user_receive, conv_id: conv_id, content: message });
-    socket.emit('typing-off', { user_send: user_send, user_receive: user_receive, conv_id: conv_id });
+   
 };
 
 /**
@@ -102,14 +101,14 @@ socket.on('new-message', function (message) {
     addMessage('replies', message.content, message.conv_id, message.user_send);
 
     if ($('#conversation .contact.active').attr('conv_id') == message.conv_id) {
-        var friend_id = $(this).attr('user_id');
+        var friend_id = $('#conversation .contact.active').data('friends_id');
         socket.emit('read-message', { conv_id: message.conv_id, user_send: user_send, user_receive: friend_id });
     }
 })
 
 emoji[0].emojioneArea.on('keyup', function () {
 
-    var user_receive = $('#conversation ul li.active').attr('user_id');
+    var user_receive = $('#conversation ul li.active').data('friends_id');
     var conv_id = $('#conversation ul li.active').attr('conv_id');
 
     socket.emit('typing-on', { user_send: user_send, user_receive: user_receive, conv_id: conv_id });
@@ -118,17 +117,17 @@ emoji[0].emojioneArea.on('keyup', function () {
 
 
 emoji[0].emojioneArea.on('blur', function () {
-    var user_receive = $('#conversation ul li.active').attr('user_id');
+    var user_receive = $('#conversation ul li.active').data('friends_id');
     var conv_id = $('#conversation ul li.active').attr('conv_id');
 
     socket.emit('typing-off', { user_send: user_send, user_receive: user_receive, conv_id: conv_id });
 })
 
 socket.on('typing-on', (data) => {
-    var messaging = $('#conversation .contact.active').attr('user_id');
+    var messaging = $('#conversation .contact.active').attr('conv_id');
     var friend = getUser(data.user_send);
-
-    if (data.user_send == messaging) {
+    debugger
+    if (data.conv_id == messaging) {
         if (!$('.messages li:last-child').hasClass('typing')) {
             var typing = '<img id="typing" src="../../Images/typing.gif" ></img>';
             $('<li class="replies typing"><img src="' + friend.profile_img + '"class="profile-img" alt="" /><p>' + typing + '</p></li>').appendTo($('.messages ul'));
@@ -138,9 +137,9 @@ socket.on('typing-on', (data) => {
 })
 
 socket.on('typing-off', (data) => {
-    var messaging = $('#conversation .contact.active').attr('user_id');
+    var messaging = $('#conversation .contact.active').attr('conv_id');
 
-    if (data.user_send == messaging) {
+    if (data.conv_id == messaging) {
         $('li.typing').remove();
     }
 })

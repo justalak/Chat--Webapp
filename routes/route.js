@@ -24,6 +24,7 @@ module.exports= (app)=>{
         res.redirect('/login');
     })
     app.route('/getuser/:user_id').get(userController.getUser);
+    app.route('/getinfor/:username').get(userController.getInfor);
     app.route('/get')
     app.route('/home').get(async function(req,res){
         if(req.cookies.sid && req.session.user){
@@ -38,8 +39,12 @@ module.exports= (app)=>{
     app.route('/addfr/:name').get(contactController.addContact);
     app.route('/getfr').get(contactController.getContact);
     //Conversation
-    app.route('/getconv').get(convesationController.getConversation);
+    app.route('/loadconv').get(convesationController.loadConversation);
+    app.route('/getconv/:conv_id').get(convesationController.getConversation);
     app.route('/preview/:conv_id').get(messageController.getPreview);
+    app.route('/creategroup').post(convesationController.createGroupChat);
+    app.route('/update-group-name/:conv_id').put(convesationController.changeGroupName);
+    app.route('/add-members/:conv_id').post(convesationController.addMembersToGroup);
     //Message
     app.route('/getmessage/:conv_id/:page').get(messageController.getMessage);
     app.route('/sendmessage').post(messageController.addMessage);

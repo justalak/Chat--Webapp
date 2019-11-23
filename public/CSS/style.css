@@ -45,3 +45,38 @@
 .img-attachment{
     max-width: 450px;
 }
+#add-groupchat{
+    border-radius: 59%;
+    border: 0;
+}
+.input-wrapper{
+    width: calc(100% - 40px);
+}
+#addToGroup-btn{
+    height: 40px;
+}
+.members-list li{
+    display: flex;
+}
+    .members-list li img{
+        height: 50px;
+        width:50px;
+        border-radius: 50%;
+    }
+    .members-list li p{
+        line-height: 50px;
+        margin-left: 10px;
+    }
+    #frame .content .messages ul li.sent a {
+       
+        color: #f5f5f5;
+        text-decoration: underline;
+    }
+    #frame .content .messages ul li.replies a {
+       
+        color: #32465a;
+        text-decoration: underline;
+    }
+    #frame .content .messages ul li a:hover{
+        color: #007bff;
+    }

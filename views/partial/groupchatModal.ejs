@@ -1,0 +1,115 @@
+<!-- Modal -->
+<div class="modal fade" id="groupchatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Create new group chat</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <div class="alert alert-danger" style=id="not-exist" role="alert">
+                User do not exist
+            </div>
+            <div class="alert alert-primary" id="add-before" role="alert">
+
+            </div>
+            <div class="alert alert-success" id="add-success" role="alert">
+
+            </div> -->
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="groupname-input" placeholder="Name of Group">
+          <div class="invalid-feedback">
+            Name of group conversation can not be empty.
+          </div>
+
+        </div>
+        <div class="form-group" style="display: flex ">
+          <div class="input-wrapper">
+            <input type="text" class="form-control" id="friend-input" placeholder="Email or username">
+            <div class="invalid-feedback">
+              User is invalid or has been added.
+            </div>
+          </div>
+
+          <button type="button" id="addToGroup-btn" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button>
+        </div>
+        <ul class="list-group members-list">
+
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="create-group-btn" class="btn btn-primary">Create Group</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="groupchatInfor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Group Members</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+           
+          <input type="text" class="form-control groupname-input"  placeholder="Name of Group">
+          <div class="invalid-feedback">
+            Name of group conversation can not be empty.
+          </div>
+
+        </div>
+       
+        <ul class="list-group members-list">
+
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-newname">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addMembers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Add new members</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" style="display: flex ">
+          <div class="input-wrapper">
+            <input type="text" class="form-control friend-input"  placeholder="Email or username">
+            <div class="invalid-feedback">
+              User is invalid or has been added.
+            </div>
+          </div>
+
+          <button type="button "  class="btn btn-primary addNewMember-btn"><i class="fas fa-plus-circle"></i></button>
+        </div>
+        <ul class="list-group members-list">
+
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="add-new-members">Add members</button>
+      </div>
+    </div>
+  </div>
+</div>
+

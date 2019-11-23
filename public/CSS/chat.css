@@ -349,7 +349,7 @@ body {
 #frame #sidepanel #search input {
     font-family: "proxima-nova", "Source Sans Pro", sans-serif;
     padding: 10px 0 10px 46px;
-    width: calc(100% - 10px);
+    width: calc(100% - 50px);
     border-radius: 20px;
     border: none;
     background: #32465a;
@@ -720,6 +720,7 @@ body {
 }
 
 #frame .content .messages ul li.replies p {
+    cursor: pointer;
     background: #f1f0f0;;
     float: left;
 }

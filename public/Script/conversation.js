@@ -1,8 +1,25 @@
+var groupImage = '../../Images/group_image.jpg';
+
 
 $(document).ready(function () {
     loadConversation();
-    $('li.contact').on('click', contactOnClick);
+
 });
+$('#conversation ul ').on('click', 'li.contact', contactOnClick);
+
+function getConversation(conv_id) {
+    var result;
+    $.ajax({
+        type: "GET",
+        url: "/getconv/" + conv_id,
+        dataType: "json",
+        async: false,
+        success: function (response) {
+            result = response;
+        }
+    });
+    return result;
+}
 
 function loadPreview(conv_id) {
     var preview
@@ -24,7 +41,7 @@ function loadConversation() {
     $('#conversation ul').empty();
     $.ajax({
         type: "GET",
-        url: "/getconv",
+        url: "/loadconv",
         async: false,
         dataType: "json",
         success: function (data) {
@@ -34,37 +51,49 @@ function loadConversation() {
                 pageNumber[conv_id] = 1;
 
                 var preview = loadPreview(conv_id);
-                var previewMessage, sender, marked;
+                var previewMessage, sender, marked, name, image;
+                var groupClass;
                 var time = '';
                 if (!preview) {
-                    previewMessage = 'Send message to ' + conv.user.lastname;
+                    previewMessage = 'Start messaging.'
                     marked = '';
                     sender = '';
                 }
                 else {
-                    if(preview.type!='text'){
-                        previewMessage='Sent an attachment';
+                    if (preview.type != 'text') {
+                        previewMessage = 'Sent an attachment';
                     }
-                    else{
+                    else {
                         previewMessage = preview.content;
                     }
                     time = calculateTime(preview.sendtime);
                     if (preview.user_send == user_send) {
                         sender = 'You:';
                     }
-                    else sender = conv.user.lastname + ':';
+                    else sender = getUser(preview.user_send).lastname + ':';
                     if (preview.seen == 1 || preview.user_send == user_send) {
                         marked = 'marked';
                     }
                     else marked = '';
                 }
-
-                if (!preview) preview = 'Send message to ' + conv.user.lastname;
-                var name = conv.user.firstname + ' ' + conv.user.lastname;
-                var conversation = '<li class="contact" user_id=' + conv.user.user_id + ' conv_id=' + conv.conversation.conv_id + '>' +
+                if (conv.friends_id.length <= 1) {
+                    var friend = getUser(conv.friends_id[0]);
+                    name = friend.firstname + ' ' + friend.lastname;
+                    image = friend.profile_img;
+                    groupClass = "";
+                    var friend_id = friend.user_id;
+                }
+                else {
+                    var number = conv.friends_id.length + 1;
+                    name = conv.conversation.name + ' (' + number + ' members)';
+                    image = groupImage;
+                    groupClass = "groupchat";
+                    var friend_id = "";
+                }
+                var conversation = '<li class="contact ' + groupClass + '" conv_id=' + conv.conversation.conv_id + '>' +
                     '<div class="wrap">' +
                     '<span class="contact-status busy"></span>' +
-                    '<img src="' + conv.user.profile_img + '" alt="" />' +
+                    '<img src="' + image + '" alt="" />' +
                     '<div class="meta">' +
                     '<p class="name">' + name + '</p>' +
                     '<div class="preview-wrap">' +
@@ -75,25 +104,45 @@ function loadConversation() {
                     '</div>' +
                     '</li>';
                 $('#conversation ul').append(conversation);
+                $("#conversation li[conv_id='" + conv.conversation.conv_id + "']").data('friends_id', conv.friends_id);
+                if (conv.friends_id.length <= 1) {
+                    $("#conversation li[conv_id='" + conv.conversation.conv_id + "']").attr('user_id', friend_id);
+                }
             });
         }
     });
+
 }
 
 
 function contactOnClick() {
     var conv_id = $(this).attr('conv_id');
-    var friend_id = $(this).attr('user_id');
-    var friend = getUser(friend_id);
+    if( $(this).data('friends_id')){
+        var friends_id=$(this).data('friends_id');
+    }
 
+    // var friend = getUser(friend_id);
+    var name, conversationImg;
+    if (friends_id.length == 1) {
+        let friend = getUser(friends_id[0]);
+        name = friend.firstname + " " + friend.lastname;
+        conversationImg = friend.profile_img;
+    }
+    else {
+        if (conv_id) {
+            var conversation = getConversation(conv_id);
+        }
+        conversationImg = groupImage;
+        name = conversation.name;
+    }
     $(".message-input").show();
     $('.content').removeClass('welcome');
     $('.contact-profile .name').empty();
 
     $(".messages").animate({ scrollTop: docHeight + 93 }, "fast");
     $(".message-input input").val("");
-    $('.contact-profile .name').append(friend.firstname + " " + friend.lastname);
-    $('#friendImg').attr('src', friend.profile_img);
+    $('.contact-profile .name').append(name);
+    $('#conversationImg').attr('src', conversationImg);
 
     if (!$(this).hasClass('active')) {
         $('.contacts .active').removeClass('active');
@@ -102,11 +151,11 @@ function contactOnClick() {
         $(this).addClass('active');
         $(this).find('.preview').addClass('marked');
 
-        pageNumber[conv_id]=1;
+        pageNumber[conv_id] = 1;
 
-        loadMessage(conv_id, friend_id, 1);
-         $(".messages").animate({ scrollTop: docHeight * 2 + 93 }, "fast");
-        socket.emit('read-message', { conv_id: conv_id, user_send: user_send, user_receive: friend_id });
+        loadMessage(conv_id, 1);
+        $(".messages").animate({ scrollTop: docHeight * 2 + 93 }, "fast");
+        socket.emit('read-message', { conv_id: conv_id, user_send: user_send, user_receive: friends_id });
     }
 }
 
@@ -114,9 +163,8 @@ function contactOnClick() {
  * Hàm thực hiện load danh sách tin nhắn
  */
 
-function loadMessage(conv_id, friend_id, page) {
+function loadMessage(conv_id, page) {
 
-    var friend = getUser(friend_id);
     var list = getMessage(conv_id, page);
 
     var user_id = getUserID();
@@ -129,25 +177,24 @@ function loadMessage(conv_id, friend_id, page) {
         else {
             type = 'replies';
         }
-
-        var sender=getUser(message.user_send);
-        imgUrl=sender.profile_img;
+        var sendtime = formatDate(new Date(message.sendtime));
+        var sender = getUser(message.user_send);
+        imgUrl = sender.profile_img;
         var content;
 
-        if(message.type=='text'){
-            content='<p>' + message.content + '</p>';
+        if (message.type == 'text') {
+            content = '<p ' + 'title="' + sendtime + '" >' + message.content + '</p>';
         }
-        else if(message.type=='image'){
-            content='<img src="'+message.filepath+'" class="img-attachment" />';
+        else if (message.type == 'image') {
+            content = '<img src="' + message.filepath + '" class="img-attachment"' + ' title="' + sendtime + '" />';
         }
-        else{
-            content='<p><a href="'+message.filepath+'" title="'+message.content+'" >'+message.content+'</a></p>';
+        else {
+            content = '<p><a href="' + message.filepath + '" title="' + sendtime + '" >' + message.content + '</a></p>';
         }
         $('.messages ul').prepend('<li class=' + type + '>' +
-            '<img src="' + imgUrl + '" class="profile-img" />' + content+
-         
+            '<img src="' + imgUrl + '" class="profile-img" />' + content +
+
             '</li>')
-        
     });
 }
 

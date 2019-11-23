@@ -36,10 +36,10 @@ module.exports={
 
                 if (getContact[0].length > 0) result['result'] = true;
                 else {
-                    var res = await db.query('insert into contact(user1_id,user2_id) values(?,?)', [user_id, user2_id]);
-                    await db.query('insert into conversation values()');
-                    var conversation= await db.query('select conv_id from conversation order by conv_id desc limit 1');
-                    var conv_id=conversation[0][0].conv_id;
+                   await db.query('insert into contact(user1_id,user2_id) values(?,?)', [user_id, user2_id]);
+                    var res =await db.query('insert into conversation values()');
+                    
+                    var conv_id=res[0].insertId;
                    
                     await db.query('insert into user_conv(user_id, conv_id) values (?,?)',[user_id,conv_id]);
                     await db.query('insert into user_conv(user_id, conv_id) values (?,?)',[user2_id,conv_id]);

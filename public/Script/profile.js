@@ -75,7 +75,9 @@ $('#saveInfo').on('click',function(){
         processData:false,
         contentType: false,
         success: function (response) {
-            
+            var imgUrl=getUser(user_send).profile_img;
+            debugger
+            $('#profile-img').attr("src",imgUrl);
             $('.profile-alert').show();
         }
     });

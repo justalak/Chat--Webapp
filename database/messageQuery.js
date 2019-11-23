@@ -3,9 +3,9 @@ var db =require('./createPool');
 module.exports={
     addMessage: async(conv_id,user_send,content)=>{
         try{
-            var time=new Date().toISOString().slice(0, 19).replace('T', ' ');
+            
             await db.query('insert message(conv_id,user_send,content) values (?,?,?)',[conv_id,user_send,content]);
-            await db.query('update conversation set lasttime=? where conv_id=? ',[time,conv_id]);
+            await db.query('update conversation set lasttime=current_timestamp() where conv_id=? ',[conv_id]);
         }catch(err){
             console.log(err);
             return false;
@@ -13,10 +13,8 @@ module.exports={
     },
     addAttachment: async(conv_id,user_send,filetype,filename,filepath)=>{
         
-
-        var time=new Date().toISOString().slice(0, 19).replace('T', ' ');
         await db.query('insert message(conv_id,user_send,content,type,filepath) values (?,?,?,?,?)',[conv_id,user_send,filename,filetype,filepath]);
-        await db.query('update conversation set lasttime=? where conv_id=? ',[time,conv_id]);
+        await db.query('update conversation set lasttime=current_timestamp() where conv_id=? ',[conv_id]);
     },
     getMessage: async(conv_id,page)=>{
         try{

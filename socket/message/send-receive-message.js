@@ -9,20 +9,32 @@ var sendReceiveMessage = (io) => {
             console.log(clients);
             socket.on('new-message', async (message) => {
                 await db.addMessage(message.conv_id, message.user_send, message.content);
-                if (clients[message.user_receive]) {
-                    helper.emitNotifyToArray(clients, message.user_receive,socket, 'new-message', message)
-                }
+                var friends=message.user_receive;
+                friends.forEach(friend_id => {
+                    if (clients[friend_id]) {
+                        helper.emitNotifyToArray(clients, friend_id,socket, 'new-message', message)
+                    }
+                });
+               
             })
             socket.on('read-message',async (data)=>{
                 await db.readMessage(data.conv_id,data.user_send);
-                if (clients[data.user_receive]) {
-                    helper.emitNotifyToArray(clients, data.user_receive,socket, 'read-message', data)
-                }
+                var friends=data.user_receive;
+                friends.forEach(friend_id => {
+                    if (clients[friend_id]) {
+                        helper.emitNotifyToArray(clients, friend_id,socket, 'read-message', data)
+                    }
+                });
+               
             })
             socket.on('new-file',(data)=>{
-                if (clients[data.user_receive]) {
-                    helper.emitNotifyToArray(clients, data.user_receive,socket, 'new-file', data);
-                }
+                var friends=data.user_receive;
+                friends.forEach(friend_id => {
+                    if (clients[friend_id]) {
+                        helper.emitNotifyToArray(clients, friend_id,socket, 'new-file', data)
+                    }
+                });
+               
             })
             socket.on('disconnect', () => {
                 clients = helper.removeSocketIdFromArray(clients, data.user_id, socket);
