@@ -7,7 +7,7 @@ Feature of this webapp:
 - Login and register
 - Profile management
 - Connect with friend
-- Chat one-one
+- Chat one-one, group chat
 - Send file, image
 - Video chat
 
