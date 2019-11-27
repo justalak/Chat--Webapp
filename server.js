@@ -4,16 +4,17 @@ var socketio= require('socket.io')
 var http=require('http').createServer(app);
 var io=socketio(http);
 var bodyParser=require('body-parser');
-var loginController=require('./controller/loginController')
-var contactController =require('./controller/contactController');
-var convesationController=require('./controller/conversationController');
-var userController=require('./controller/userController');
+const ExpressPeerServer = require('peer').ExpressPeerServer;
+
 var session=require('express-session');
 var route=require('./routes/route');
 var cookieParser=require('cookie-parser');
 var initSocket =require('./socket/index');
 //Setup for server
-
+const options = {
+    debug: true
+}
+//const peerserver = ExpressPeerServer(http, options);
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -36,8 +37,9 @@ app.use(function(req,res,next){
     }
     next();
 })
+//app.use('/peerjs', peerserver);
 route(app);
 
+http.listen(8080);
 
 initSocket(io);
-http.listen(8080);

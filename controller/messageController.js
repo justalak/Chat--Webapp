@@ -22,15 +22,7 @@ module.exports = {
         form.on('file', async (name, file) => {
 
             var oldpath = file.path;
-            var newname = file.name;
-
-            // var salt=0;
-            // while(fs.existsSync(newpath)){
-            //     salt++;
-            // }
-            // if(salt!=0){
-            //     newname=salt+'_'+newname
-            // }
+            var newname = conv_id+'_'+new Date().getTime()+'_'+file.name;
 
             var newpath = form.uploadDir + newname;
             var filepath = config.attachmentDir + newname;
@@ -38,7 +30,7 @@ module.exports = {
             if (file.type.substring(0, 5) == 'image')
                 type = 'image';
             else type = 'file';
-            await db.addAttachment(conv_id, user_send,type, newname, filepath);
+            await db.addAttachment(conv_id, user_send,type, file.name, filepath);
 
             fs.rename(oldpath, newpath, (err) => {
                 if (err) console.log(err);

@@ -45,25 +45,22 @@
 .img-attachment{
     max-width: 450px;
 }
-#add-groupchat{
-    border-radius: 59%;
-    border: 0;
-}
+
 .input-wrapper{
     width: calc(100% - 40px);
 }
 #addToGroup-btn{
     height: 40px;
 }
-.members-list li{
+.list-group li{
     display: flex;
 }
-    .members-list li img{
+    .list-group li img{
         height: 50px;
         width:50px;
         border-radius: 50%;
     }
-    .members-list li p{
+    .list-group li p{
         line-height: 50px;
         margin-left: 10px;
     }
@@ -74,9 +71,55 @@
     }
     #frame .content .messages ul li.replies a {
        
-        color: #32465a;
+        color: #007bff;
         text-decoration: underline;
     }
-    #frame .content .messages ul li a:hover{
-        color: #007bff;
+    #frame .content .messages ul li.replies a:hover{
+        color: #32465a;
     }
+    #frame .content .messages ul li.sent a:hover{
+        color: #007bff;
+    } 
+.profileImg img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.connecting{
+    line-height: 50px;
+}
+.loading{
+    background: url(../Images/rolling.gif) center no-repeat;
+    height: 50px;
+    background-size: contain;
+}
+#their-video{
+    width:500px;
+}
+#my-video{
+    width: 200px
+}
+.modal-content{
+    min-width: fit-content;
+}
+#conv-filter{
+    background: #32465a;
+    border: none;
+    border-radius: 10px;
+    width: 50%;
+}
+#conv-filter button{
+    width: 100%;
+    background: #32465a;
+    
+}
+#add-groupchat{
+    width: 50%;
+    border: 0;
+    background: #32465a;
+    
+}
+#conv-filter a{
+    cursor: pointer;
+    font-size: 20px;
+}

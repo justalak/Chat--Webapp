@@ -7,6 +7,41 @@ $(document).ready(function () {
 });
 $('#conversation ul ').on('click', 'li.contact', contactOnClick);
 
+$('#chat-single').on('click',()=>{
+    loadConversation('single');
+
+    $(".message-input").fadeOut(500);
+    $('.content').addClass('welcome');
+    $('.contact-profile .name').empty();
+    $('.messages ul').empty();
+    $('.contact-profile #conversationImg').hide();
+    $('#load-message').hide();
+});
+
+$('#chat-group').on('click',()=>{
+    $(".message-input").fadeOut(500);
+    $('.content').addClass('welcome');
+    $('.contact-profile .name').empty();
+    $('.messages ul').empty();
+    $('.contact-profile #conversationImg').hide();
+    $('#load-message').hide();
+
+    loadConversation('group');
+})
+
+$('#chat-all').on('click',()=>{
+    $(".message-input").fadeOut(500);
+    $('.content').addClass('welcome');
+    $('.contact-profile .name').empty();
+    $('.messages ul').empty();
+    $('.contact-profile #conversationImg').hide();
+    $('#load-message').hide();
+
+    loadConversation();
+})
+
+$('#chat-group').on('click',)
+
 function getConversation(conv_id) {
     var result;
     $.ajax({
@@ -37,11 +72,13 @@ function loadPreview(conv_id) {
 /**
  * Hàm thực hiện load danh sách cuộc trò chuyện
  */
-function loadConversation() {
+function loadConversation(type='all') {
+    $('#conversation ul').hide();
+    $('#conversation ul').fadeIn(1000);
     $('#conversation ul').empty();
     $.ajax({
         type: "GET",
-        url: "/loadconv",
+        url: "/loadconv/"+type,
         async: false,
         dataType: "json",
         success: function (data) {
@@ -143,6 +180,7 @@ function contactOnClick() {
     $(".message-input input").val("");
     $('.contact-profile .name').append(name);
     $('#conversationImg').attr('src', conversationImg);
+    $('#conversationImg').show();
 
     if (!$(this).hasClass('active')) {
         $('.contacts .active').removeClass('active');

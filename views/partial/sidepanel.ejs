@@ -1,10 +1,19 @@
 <div id="sidepanel">
 
     <div id="search">
-        <label for=""><i class="fas fa-search"></i></label>
-        <input type="text" placeholder="Search contacts..." />
+        <div class="dropdown"id="conv-filter">
+            <button class="btn btn-dark dropdown-toggle" type="button" 
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Chat filter
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" id='chat-single' >Single chat</a>
+                <a class="dropdown-item" id='chat-group'>Group chat </a>
+                <a class="dropdown-item" id='chat-all'>All conversation</a>
+            </div>
+        </div>
         <button type="button" id="add-groupchat" class="btn btn-outline-light" data-toggle="modal"
-            data-target="#groupchatModal" title="Add new conversation"><i class="fas fa-plus-circle"></i></button>
+            data-target="#groupchatModal" title="Add new conversation"><i class="fas fa-plus-circle"></i><span> Create Group</span></button>
     </div>
     <% include ../partial/contact %>
     <div id="bottom-bar">

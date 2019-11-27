@@ -17,14 +17,6 @@ module.exports={
             var oldpath = file.path;
             var newname = file.name;
            
-            var salt=0;
-            while(fs.existsSync(newpath)){
-                salt++;
-            }
-            if(salt!=0){
-                newname=salt+'_'+newname
-            }
-
             var newpath = form.uploadDir + newname;
             var filepath = config.attachmentDir + newname;
 

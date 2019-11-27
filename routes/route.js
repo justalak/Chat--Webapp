@@ -38,8 +38,10 @@ module.exports= (app)=>{
     //Contact
     app.route('/addfr/:name').get(contactController.addContact);
     app.route('/getfr').get(contactController.getContact);
+    app.route('/get-notification/:user_id').get(contactController.getNotification);
+    app.route('/check-notifications/:user_id').put(contactController.checkNotifications);
     //Conversation
-    app.route('/loadconv').get(convesationController.loadConversation);
+    app.route('/loadconv/:type').get(convesationController.loadConversation);
     app.route('/getconv/:conv_id').get(convesationController.getConversation);
     app.route('/preview/:conv_id').get(messageController.getPreview);
     app.route('/creategroup').post(convesationController.createGroupChat);

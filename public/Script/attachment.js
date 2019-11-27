@@ -1,29 +1,35 @@
 /**
  * Hàm hiển thị file lên giao diện chat 
  */
-function displayAttachment(type, file, conv_id,user_id) {
+function displayAttachment(type, file,filename, conv_id, user_id) {
     var send = getUser(user_id);
     var imgUrl = send.profile_img;
     var messaging = $('#conversation .contact.active').attr('conv_id');
-
+    var conversation = getConversation(conv_id);
     var sender, imgUrl;
     if (type == 'sent') {
         sender = 'You';
     }
     else {
         sender = send.lastname;
+        if (messaging != conv_id)
+            if (conversation.name)
+                alertify.notify(send.firstname + " " + send.lastname + " sent an attachment to " + conversation.name, 'success', 7);
+            else
+                alertify.notify(send.firstname + " " + send.lastname + " sent an attachment", 'success', 7);
+
     }
 
     if (messaging == conv_id) {
         if (file.filetype == 'image') {
             content = '<img src="' + file.filepath + '" class="img-attachment" />';
-            
+
         }
         else {
-            content = '<p><a href="' + file.filepath + '" title="' + file.filename + '" >' + file.filename + '</a></p>';
+            content = '<p><a href="' + file.filepath + '" title="' + filename + '" >' + filename + '</a></p>';
         }
 
-        $('.messages ul').append('<li class="'+type+'">' +
+        $('.messages ul').append('<li class="' + type + '">' +
             '<img src="' + imgUrl + '" class="profile-img" />' + content +
             '</li>');
 
@@ -42,14 +48,14 @@ function displayAttachment(type, file, conv_id,user_id) {
     }
 
     $(conversation).find('.send-time').html('now');
-    $(".messages").animate({ scrollTop: docHeight  +700 }, "fast");
+    $(".messages").animate({ scrollTop: docHeight + 700 }, "fast");
     docHeight += 700;
 }
 
 function sendAttachment(files, conv_id, user_receive) {
     var file = files[0];
-    if(file.size>FILE_LIMIT){
-        alert('File that you ch')
+    if (file.size > FILE_LIMIT) {
+        alertify.error('File that you choose is too big. Max size available is 2MB', 'error', 7);
     }
     var formData = new FormData();
 
@@ -68,18 +74,18 @@ function sendAttachment(files, conv_id, user_receive) {
         processData: false,
         contentType: false,
         success: function (response) {
-            socket.emit('new-file', { file: response, user_send:user_send,user_receive: user_receive,conv_id:conv_id });
+            socket.emit('new-file', { file: response, user_send: user_send, user_receive: user_receive, conv_id: conv_id });
 
-            displayAttachment('sent',response,conv_id,user_send);
+            displayAttachment('sent', response,file.name, conv_id, user_send);
         },
         err: function (err) {
-            
+
         }
     });
 }
 
-socket.on('new-file',(data)=>{
-    displayAttachment('replies',data.file,data.conv_id,data.user_send);
+socket.on('new-file', (data) => {
+    displayAttachment('replies', data.file, data.conv_id, data.user_send);
     if ($('#conversation .contact.active').attr('conv_id') == message.conv_id) {
         var friend_id = data.user_send;
         socket.emit('read-message', { conv_id: message.conv_id, user_send: user_send, user_receive: friend_id });

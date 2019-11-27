@@ -21,7 +21,12 @@ $('#add-members').on('click', function () {
     $('#addMembers ul').empty();
     $('#addMembers .alert').hide();
     $('.friend-input').removeClass('is-invalid');
-    $('#addMembers').modal('show');
+
+    if ($('#conversation .contact.active').hasClass('groupchat'))
+        $('#addMembers').modal('show');
+    else {
+        alertify.notify('Please choose a group conversation to add new members.', 'error', 5);
+    }
     newMembers = [];
 })
 
@@ -40,14 +45,12 @@ $('#groupname-input').on('blur', function () {
     }
 });
 
-
-
 $('#save-newname').on('click', function () {
     updateGroupChat();
 })
- $('#add-new-members').on('click',function () {
-     updateGroupMembers();
-   })
+$('#add-new-members').on('click', function () {
+    updateGroupMembers();
+})
 $(document).on('click', '#conversation-infor', function () {
     getConversationInfor();
 })
@@ -213,20 +216,7 @@ function addNewMember() {
             $(item).append('<p>' + friend.firstname + ' ' + friend.lastname + '</p>')
             $('#addMembers .modal-body ul').append(item);
             $('#addMembers .friend-input').removeClass('is-invalid');
-
-            // $.ajax({
-            //     type: "POST",
-            //     url: "/add-members/" + conv_id,
-            //     data: JSON.stringify({ newMembers: newMembers }),
-            //     async: false,
-            //     dataType: "json",
-            //     contentType: 'application/json',
-            //     success: function (result) {
-            //         $('#addMembers').modal('hide');
-            //         debugger
-            //         loadConversation();
-            //     }
-            // });
+  
         }
         else {
             $('#addMembers .friend-input').addClass('is-invalid')

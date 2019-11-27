@@ -331,7 +331,7 @@ body {
 }
 
 #frame #sidepanel #search {
-    
+    display: flex;
     font-weight: 300;
 }
 

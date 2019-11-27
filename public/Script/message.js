@@ -1,5 +1,5 @@
-var user_send = $('#profile-img').attr('user_id');
-const FILE_LIMIT=2*1024*1024;
+
+const FILE_LIMIT = 2 * 1024 * 1024;
 
 var docHeight = $(document).height();
 
@@ -9,11 +9,11 @@ $('.submit').click(function () {
 
 $('#load-message').on('click', function () {
     var messaging = $('#conversation .contact.active').attr('conv_id');
-    
 
-    loadMessage(messaging,  pageNumber[messaging]);
+
+    loadMessage(messaging, pageNumber[messaging]);
     // $(".messages").animate({ scrollTop: docHeight }, 200);
-     docHeight += 93 * 10;
+    docHeight += 93 * 10;
 })
 
 $(window).on('keydown', function (e) {
@@ -27,10 +27,10 @@ $(window).on('keydown', function (e) {
 /**
  * Hàm thực hiện thêm tin nhắn vào giao diện
  */
-function addMessage(type, message, conv_id, friend_id,) {
+function addMessage(type, message, conv_id, friend_id, ) {
     var friend = getUser(friend_id);
     var messaging = $('#conversation .contact.active').attr('conv_id');
-
+    var conversation = getConversation(conv_id);
     var sender, imgUrl;
     if (type == 'sent') {
         sender = 'You';
@@ -39,6 +39,13 @@ function addMessage(type, message, conv_id, friend_id,) {
     else {
         sender = friend.lastname;
         imgUrl = friend.profile_img;
+
+        if (messaging != conv_id) {
+            if (conversation.name)
+                alertify.notify(friend.firstname + " " + friend.lastname + " to " + conversation.name + ": " + message, 'success', 7);
+            else
+                alertify.notify(friend.firstname + " " + friend.lastname + ": " + message, 'success', 7);
+        }
     }
 
     if (messaging == conv_id) {
@@ -87,7 +94,7 @@ function newMessage() {
     addMessage('sent', message, conv_id);
 
     socket.emit('new-message', { user_send: user_send, user_receive: user_receive, conv_id: conv_id, content: message });
-   
+
 };
 
 /**

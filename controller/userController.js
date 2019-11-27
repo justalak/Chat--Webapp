@@ -11,11 +11,11 @@ module.exports={
         var user= await db.getInfor(req.params.username);
         res.json(user);
     },
-    updateProfile:(req,res)=>{
+    updateProfile:async(req,res)=>{
         var user_id=req.session.user.user_id;
-
-        uploader.uploadProfileImage(req,user_id);
-
-        res.end();
+        var filepath=await uploader.uploadProfileImage(req,user_id);
+        
+        console.log(filepath);
+        res.json(filepath);
     }
 }

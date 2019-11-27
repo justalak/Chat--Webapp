@@ -2,7 +2,7 @@ var db=require('../database/conversationQuery');
 
 module.exports={
     loadConversation: async(req,res)=>{
-        var result=await db.loadConversation(req.session.user.user_id);
+        var result=await db.loadConversationList(req.session.user.user_id,req.params.type);
         res.json(result);
     },
     getConversation: async(req,res)=>{

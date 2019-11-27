@@ -74,8 +74,9 @@ $('#saveInfo').on('click',function(){
         data: formData,
         processData:false,
         contentType: false,
+        dataType: 'json',
         success: function (response) {
-            var imgUrl=getUser(user_send).profile_img;
+            var imgUrl=response;
             debugger
             $('#profile-img').attr("src",imgUrl);
             $('.profile-alert').show();

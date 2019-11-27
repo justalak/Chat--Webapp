@@ -1,6 +1,6 @@
 window.emojioneVersion = "3.1.2";
 const MAX_SIZE = 1024 * 1024 * 2;
-
+alertify.set('notifier','position', 'bottom-right');
 var messPerPage = 20;
 var pageNumber = {};
 var emoji = $("#type-input").emojioneArea({
@@ -8,8 +8,12 @@ var emoji = $("#type-input").emojioneArea({
     filtersPosition: "bottom",
     container: '#emoji-container',
 });
-
+var user_send = $('#profile-img').attr('user_id');
 var me = getUser($('#profile-img').attr('user_id'));
+$(document).ready(function () {
+    
+    alertify.notify('Welcome to messenger.io, '+me.firstname+" "+me.lastname, 'success', 5);
+});
 
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
