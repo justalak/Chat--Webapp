@@ -7,7 +7,7 @@ var addFriend =(io) =>{
             clients=helper.pushSocketIdToArray(clients,data.user_id,socket.id);   
                  
             socket.on('add-friend',(data)=>{
-                console.log(data)
+               
                 helper.emitNotifyToArray(clients, data.user_receive,socket, 'add-friend', data);
             })
             socket.on('disconnect',()=>{

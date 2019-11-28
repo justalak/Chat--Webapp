@@ -8,9 +8,11 @@ function displayAttachment(type, file,filename, conv_id, user_id) {
     var conversation = getConversation(conv_id);
     var sender, imgUrl;
     if (type == 'sent') {
+        
         sender = 'You';
     }
     else {
+        
         sender = send.lastname;
         if (messaging != conv_id)
             if (conversation.name)
@@ -74,9 +76,8 @@ function sendAttachment(files, conv_id, user_receive) {
         processData: false,
         contentType: false,
         success: function (response) {
-            socket.emit('new-file', { file: response, user_send: user_send, user_receive: user_receive, conv_id: conv_id });
-
-            displayAttachment('sent', response,file.name, conv_id, user_send);
+            socket.emit('new-file', { file: response,filename:file.name, user_send: user_send, user_receive: user_receive, conv_id: conv_id });
+            displayAttachment('sent', response,file.name, conv_id, me_id);
         },
         err: function (err) {
 
@@ -85,7 +86,8 @@ function sendAttachment(files, conv_id, user_receive) {
 }
 
 socket.on('new-file', (data) => {
-    displayAttachment('replies', data.file, data.conv_id, data.user_send);
+    
+    displayAttachment('replies', data.file,data.filename, data.conv_id, data.user_send);
     if ($('#conversation .contact.active').attr('conv_id') == message.conv_id) {
         var friend_id = data.user_send;
         socket.emit('read-message', { conv_id: message.conv_id, user_send: user_send, user_receive: friend_id });

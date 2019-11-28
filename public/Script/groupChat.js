@@ -127,6 +127,12 @@ function createGroup() {
             contentType: 'application/json',
             success: function (result) {
                 $('#groupchatModal').modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'New Group Created',
+                    text: 'Start messaging with other members in '+groupName,
+                    
+                  })
                 loadConversation();
             }
         });
@@ -184,6 +190,13 @@ function updateGroupChat() {
                 loadConversation(); $('#conversation .contact.active')
                 $('.contact-profile .name').html(newname);
                 $('#conversation .contact[conv_id="' + conv_id + '"]').addClass('active');
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Update Successfully',
+                    text: "Group's name has been changed to "+newname,
+                    
+                  })
             }
         });
     }
@@ -244,6 +257,13 @@ function updateGroupMembers() {
                 $('#addMembers').modal('hide');
                 debugger
                 loadConversation();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Update Successfully',
+                    text: "Add successfully new members to Group.",
+                    
+                  })
             }
         });
     }

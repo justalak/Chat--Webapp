@@ -20,7 +20,7 @@ $('#addfr-btn').on('click', function () {
 $('#notification').on('click', function () {
     if ($('#number-of-notif').text() != 0) {
         $('#notifModal').modal({
-            backdrop:'static'
+            backdrop: 'static'
         });
         checkNotifications();
     }
@@ -29,7 +29,7 @@ $('#notification').on('click', function () {
     }
 })
 
-$('#notifModal .close-notif').on('click',function () {
+$('#notifModal .close-notif').on('click', function () {
     loadNotification();
 })
 
@@ -62,12 +62,19 @@ function addContact() {
                 }
                 else {
                     var name = data['newuser'].firstname + ' ' + data['newuser'].lastname;
-                    $('#add-success').append('Added ' + name + ' succesfully');
                     loadContact();
                     loadConversation();
-                    debugger
-                    socket.emit('add-friend',{user_send:user_send,user_receive:data.newuser.user_id})
-                    $('#add-success').show();
+
+                    socket.emit('add-friend', { user_send: user_send, user_receive: data.newuser.user_id })
+
+                    Swal.fire({
+                        title: 'Add contact Successfully',
+                        imageUrl: data.newuser.profile_img,
+                        imageWidth: 90,
+                        imageHeight: 90,
+                        text: "You added " + name + " to your contact."
+                    })
+
                 }
             },
             error: function (err) {
@@ -140,20 +147,22 @@ function loadNotification() {
 }
 
 function checkNotifications(conv_id) {
-    var conv_id=user_send;
+    var conv_id = user_send;
     $.ajax({
         type: "PUT",
-        url: "/check-notifications/"+conv_id,
-        
+        url: "/check-notifications/" + conv_id,
+
         dataType: "json",
         success: function (response) {
-            
+
         }
     });
 }
 
-socket.on('add-friend',(data)=>{
+socket.on('add-friend', (data) => {
     loadNotification();
-    var friend=getUser(data.user_send);
-    alertify.notify(friend.firstname+' '+friend.lastname+' has been added to friends list recently','success',7);
+    var friend = getUser(data.user_send);
+    alertify.notify(friend.firstname + ' ' + friend.lastname + ' has been added to friends list recently', 'success', 7);
+    loadConversation();
+    loadContact();
 })

@@ -12,7 +12,7 @@ $('#load-message').on('click', function () {
 
 
     loadMessage(messaging, pageNumber[messaging]);
-    // $(".messages").animate({ scrollTop: docHeight }, 200);
+    
     docHeight += 93 * 10;
 })
 
@@ -42,9 +42,9 @@ function addMessage(type, message, conv_id, friend_id, ) {
 
         if (messaging != conv_id) {
             if (conversation.name)
-                alertify.notify(friend.firstname + " " + friend.lastname + " to " + conversation.name + ": " + message, 'success', 7);
+                alertify.notify(friend.firstname + " " + friend.lastname + " to " + conversation.name + ": " + message, 'success', 4);
             else
-                alertify.notify(friend.firstname + " " + friend.lastname + ": " + message, 'success', 7);
+                alertify.notify(friend.firstname + " " + friend.lastname + ": " + message, 'success', 4);
         }
     }
 

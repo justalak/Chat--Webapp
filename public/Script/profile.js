@@ -79,7 +79,15 @@ $('#saveInfo').on('click',function(){
             var imgUrl=response;
             debugger
             $('#profile-img').attr("src",imgUrl);
-            $('.profile-alert').show();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Update Successfully',
+                text: "Your profile image has been updated successfully."
+                
+              })
+
+              $('#profile-modal').modal('hide');
         }
     });
 })

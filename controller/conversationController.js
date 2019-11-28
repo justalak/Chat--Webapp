@@ -14,7 +14,7 @@ module.exports={
         res.json(result);
     },
     changeGroupName: async(req,res)=>{
-        console.log(req.body);
+       
         var result=await db.changeGroupName(req.params.conv_id,req.body.newname);
         res.json(result);
     },

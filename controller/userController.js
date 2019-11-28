@@ -15,7 +15,7 @@ module.exports={
         var user_id=req.session.user.user_id;
         var filepath=await uploader.uploadProfileImage(req,user_id);
         
-        console.log(filepath);
+       
         res.json(filepath);
     }
 }
