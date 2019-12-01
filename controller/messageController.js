@@ -9,7 +9,8 @@ module.exports = {
         res.json(messages);
     },
     addMessage: async (req, res) => {
-        await db.addMessage(req.body.conv_id, req.body.user_send, req.body.content);
+       var message_id= await db.addMessage(req.body.conv_id, req.body.user_send, req.body.content);
+       res.json(message_id);
     },
     addAttachment: async (req, res) => {
         var form = new formidable.IncomingForm();
@@ -30,12 +31,12 @@ module.exports = {
             if (file.type.substring(0, 5) == 'image')
                 type = 'image';
             else type = 'file';
-            await db.addAttachment(conv_id, user_send,type, file.name, filepath);
+            var message_id=await db.addAttachment(conv_id, user_send,type, file.name, filepath);
 
             fs.rename(oldpath, newpath, (err) => {
                 if (err) console.log(err);
             })
-            res.json({ filename: newname, filetype: type, filepath: filepath });
+            res.json({ message_id:message_id,filename: newname, filetype: type, filepath: filepath });
         });
 
         form.on('end', function () {
@@ -45,5 +46,19 @@ module.exports = {
     getPreview: async (req, res) => {
         var preview = await db.getPreviewMessage(req.params.conv_id);
         res.json(preview);
+    },
+
+    readAllMessage: async(req,res)=>{
+        var result =await db.readAllMessage(req.params.conv_id,req.session.user.user_id);
+        res.json(result);
+    },
+    readMessageById: async(req,res)=>{
+        var result=await db.readMessageById(req.params.message_id,req.body.user_send);
+        res.json(result);
+    },
+    getSeenUsers: async(req,res)=>{
+        var result=await db.getSeenUsers(req.params.message_id);
+        res.json(result);
     }
+
 }

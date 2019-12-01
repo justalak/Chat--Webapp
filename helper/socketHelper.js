@@ -8,7 +8,7 @@ let pushSocketIdToArray = (clients, userId, socketId) => {
 };
 
 let emitNotifyToArray = (clients, userId, socket, eventName, data) => {
-  console.log(clients[userId]);
+  
   if (clients[userId]) {
     clients[userId].forEach(socketId =>
       socket.broadcast.to(socketId).emit(eventName, data)

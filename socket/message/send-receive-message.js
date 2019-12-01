@@ -8,7 +8,7 @@ var sendReceiveMessage = (io) => {
             clients = helper.pushSocketIdToArray(clients, data.user_id, socket.id);
             
             socket.on('new-message', async (message) => {
-                await db.addMessage(message.conv_id, message.user_send, message.content);
+               
                 var friends=message.user_receive;
                 friends.forEach(friend_id => {
                     if (clients[friend_id]) {

@@ -16,6 +16,8 @@ $('#load-message').on('click', function () {
     docHeight += 93 * 10;
 })
 
+
+
 $(window).on('keydown', function (e) {
     if (e.which == 13) {
 
@@ -27,7 +29,7 @@ $(window).on('keydown', function (e) {
 /**
  * Hàm thực hiện thêm tin nhắn vào giao diện
  */
-function addMessage(type, message, conv_id, friend_id, ) {
+function addMessage(type, message, conv_id,message_id,friend_id ) {
     var friend = getUser(friend_id);
     var messaging = $('#conversation .contact.active').attr('conv_id');
     var conversation = getConversation(conv_id);
@@ -50,7 +52,7 @@ function addMessage(type, message, conv_id, friend_id, ) {
 
     if (messaging == conv_id) {
         var typing = $('li.typing');
-        $('<li class=' + type + '><img src="' + imgUrl + '" alt="" class="profile-img"/><p>' + message + '</p></li>').appendTo($('.messages ul'));
+        $('<li class=' + type + ' message_id='+message_id+'><img src="' + imgUrl + '" alt="" class="profile-img"/><p>' + message + '</p></li>').appendTo($('.messages ul'));
         $('.messages ul').append(typing);
         $('.message-input input').val(null);
     }
@@ -91,9 +93,18 @@ function newMessage() {
     if ($.trim(message) == '') {
         return false;
     }
-    addMessage('sent', message, conv_id);
-
-    socket.emit('new-message', { user_send: user_send, user_receive: user_receive, conv_id: conv_id, content: message });
+    $.ajax({
+        type: "POST",
+        url: "/sendmessage",
+        data: JSON.stringify({ user_send: user_send, user_receive: user_receive, conv_id: conv_id, content: message }),
+        dataType: "json",
+        contentType:"application/json",
+        success: function (response) {
+            debugger
+            addMessage('sent', message, conv_id,response);
+            socket.emit('new-message', { user_send: user_send, user_receive: user_receive, conv_id: conv_id, content: message,message_id:response });
+        }
+    });
 
 };
 
@@ -105,11 +116,21 @@ function newMessage() {
 
 socket.on('new-message', function (message) {
 
-    addMessage('replies', message.content, message.conv_id, message.user_send);
+    addMessage('replies', message.content, message.conv_id, message.message_id,message.user_send);
 
     if ($('#conversation .contact.active').attr('conv_id') == message.conv_id) {
         var friend_id = $('#conversation .contact.active').data('friends_id');
-        socket.emit('read-message', { conv_id: message.conv_id, user_send: user_send, user_receive: friend_id });
+        $.ajax({
+            type: "PUT",
+            url: "/read-message/"+message.message_id,
+            data: JSON.stringify({user_send:user_send}),
+            dataType: "json",
+            contentType:"application/json",
+            success: function (response) {
+                debugger
+                // socket.emit('read-message', { conv_id: message.conv_id, user_send: user_send, user_receive: friend_id,message_id:message.message_id });
+            }
+        });
     }
 })
 
@@ -145,7 +166,6 @@ socket.on('typing-on', (data) => {
 
 socket.on('typing-off', (data) => {
     var messaging = $('#conversation .contact.active').attr('conv_id');
-
     if (data.conv_id == messaging) {
         $('li.typing').remove();
     }

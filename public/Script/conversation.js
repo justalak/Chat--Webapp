@@ -92,7 +92,7 @@ function loadConversation(type='all') {
                 var groupClass;
                 var time = '';
                 if (!preview) {
-                    previewMessage = 'Start messaging.'
+                    previewMessage = "You're connected on Messenger"
                     marked = '';
                     sender = '';
                 }
@@ -153,6 +153,7 @@ function loadConversation(type='all') {
 
 
 function contactOnClick() {
+    debugger
     var conv_id = $(this).attr('conv_id');
     if( $(this).data('friends_id')){
         var friends_id=$(this).data('friends_id');
@@ -193,7 +194,15 @@ function contactOnClick() {
 
         loadMessage(conv_id, 1);
         $(".messages").animate({ scrollTop: docHeight * 2 + 93 }, "fast");
-        socket.emit('read-message', { conv_id: conv_id, user_send: user_send, user_receive: friends_id });
+        $.ajax({
+            type: "PUT",
+            url: "/read-all-message/"+conv_id,
+            dataType: "json",
+            data:JSON.stringify({user_send:user_send}),
+            success: function (response) {
+
+            }
+        });
     }
 }
 
@@ -229,7 +238,7 @@ function loadMessage(conv_id, page) {
         else {
             content = '<p><a href="' + message.filepath + '" title="' + sendtime + '" >' + message.content + '</a></p>';
         }
-        $('.messages ul').prepend('<li class=' + type + '>' +
+        $('.messages ul').prepend('<li class=' + type + ' message_id='+message.message_id+'>' +
             '<img src="' + imgUrl + '" class="profile-img" />' + content +
 
             '</li>')

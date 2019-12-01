@@ -194,7 +194,7 @@ function updateGroupChat() {
                 Swal.fire({
                     icon: 'success',
                     title: 'Update Successfully',
-                    text: "Group's name has been changed to "+newname,
+                    html: "Group's name has been changed to "+"<b>"+newname+"</b>",
                     
                   })
             }
