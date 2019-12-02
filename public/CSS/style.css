@@ -14,8 +14,8 @@
 }
 
 .messages .profile-img {
-    width: 22px;
-    height: 22px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
 }
 
@@ -122,4 +122,16 @@
 #conv-filter a{
     cursor: pointer;
     font-size: 20px;
+}
+.seen-img{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 6px 8px 6px 8px !important;
+}
+.sent .seen-users{
+    float: right;
+}
+.replies .seen-users{
+    float: left;
 }

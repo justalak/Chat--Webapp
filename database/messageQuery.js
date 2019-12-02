@@ -78,11 +78,24 @@ module.exports = {
             result[0].forEach(element => {
                 list.push(element.user_id);
             });
-            console.log(list);
+           
             return list;
         }catch(err){
             console.log(err);
             return false;
+        }
+    },
+    isMessageSeen: async (message_id,user_id)=>{
+        try{
+        var result=await db.query('select * from seen_message where message_id=? and user_id=?',[message_id,user_id]);
+        if(result[0].length==0)
+            return false;
+        else
+            return true;
+        }catch(err){
+            console.log(err);
+            return err;
+            
         }
     }
 }

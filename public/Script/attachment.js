@@ -1,7 +1,7 @@
 /**
  * Hàm hiển thị file lên giao diện chat 
  */
-function displayAttachment(type, file,filename, conv_id, user_id) {
+function displayAttachment(type, file ,filename, conv_id, user_id) {
     var send = getUser(user_id);
     var imgUrl = send.profile_img;
     var messaging = $('#conversation .contact.active').attr('conv_id');
@@ -31,7 +31,7 @@ function displayAttachment(type, file,filename, conv_id, user_id) {
             content = '<p><a href="' + file.filepath + '" title="' + filename + '" >' + filename + '</a></p>';
         }
 
-        $('.messages ul').append('<li class="' + type + '">' +
+        $('.messages ul').append('<li class="' + type + '" message_id='+file.message_id+'>' +
             '<img src="' + imgUrl + '" class="profile-img" />' + content +
             '</li>');
 

@@ -59,6 +59,10 @@ module.exports = {
     getSeenUsers: async(req,res)=>{
         var result=await db.getSeenUsers(req.params.message_id);
         res.json(result);
+    },
+    checkMessageStatus: async(req,res)=>{
+        var result= await db.isMessageSeen(req.params.message_id,req.params.user_id);
+        res.json(result);
     }
 
 }

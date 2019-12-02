@@ -711,7 +711,8 @@ body {
 #frame .content .messages ul li.sent p {
     background: #32465a;
     color: #f5f5f5;
-    float: right
+    float: right;
+    cursor: pointer;
 }
 
 #frame .content .messages ul li.replies img {

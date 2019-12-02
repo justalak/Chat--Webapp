@@ -108,7 +108,7 @@ function loadConversation(type='all') {
                         sender = 'You:';
                     }
                     else sender = getUser(preview.user_send).lastname + ':';
-                    if (preview.seen == 1 || preview.user_send == user_send) {
+                    if (isMessageSeen(preview.message_id,user_send) || preview.user_send == user_send) {
                         marked = 'marked';
                     }
                     else marked = '';
@@ -153,7 +153,7 @@ function loadConversation(type='all') {
 
 
 function contactOnClick() {
-    debugger
+    
     var conv_id = $(this).attr('conv_id');
     if( $(this).data('friends_id')){
         var friends_id=$(this).data('friends_id');
@@ -218,12 +218,7 @@ function loadMessage(conv_id, page) {
 
     list.forEach(message => {
         var type, imgUrl;
-        if (message.user_send == user_id) {
-            type = 'sent';
-        }
-        else {
-            type = 'replies';
-        }
+       
         var sendtime = formatDate(new Date(message.sendtime));
         var sender = getUser(message.user_send);
         imgUrl = sender.profile_img;
@@ -238,10 +233,18 @@ function loadMessage(conv_id, page) {
         else {
             content = '<p><a href="' + message.filepath + '" title="' + sendtime + '" >' + message.content + '</a></p>';
         }
-        $('.messages ul').prepend('<li class=' + type + ' message_id='+message.message_id+'>' +
+        if (message.user_send == user_id) {
+            type = 'sent';
+            $('.messages ul').prepend('<li class="sent" message_id='+message.message_id+'>'+content +
+            '</li>')
+        }
+        else {
+            type = 'replies';
+            $('.messages ul').prepend('<li class="replies" message_id='+message.message_id+'>' +
             '<img src="' + imgUrl + '" class="profile-img" />' + content +
 
             '</li>')
+        }
     });
 }
 
