@@ -1,0 +1,47 @@
+{
+  "name": "messenger.io",
+  "version": "1.0.0",
+  "description": "Project I: Chat Application",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cookies-parser": "^1.2.0",
+    "emojione": "^4.5.0",
+    "ejs": "^2.7.1",
+    "emojionearea": "^3.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "fs": "^0.0.1-security",
+    "formidable": "^1.2.1",
+    "http": "^0.0.0",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.7.0",
+    "peer": "^0.2.10",
+    "session": "^0.1.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justalak/Messenger.io.git"
+  },
+  "keywords": [
+    "Node",
+    "js",
+    "express",
+    "my",
+    "sql"
+  ],
+  "author": "Hoàng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justalak/Messenger.io/issues"
+  },
+  "homepage": "https://github.com/justalak/Messenger.io#readme"
+}
