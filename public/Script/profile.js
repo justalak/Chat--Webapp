@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $('#profile-img').attr('src',me.profile_img);
-    $('#imgProfile').attr('src',me.profile_img);
+    $('#profile-img').attr('src', me.profile_img);
+    $('#imgProfile').attr('src', me.profile_img);
 });
 
 
@@ -44,50 +44,58 @@ $('#btnDiscard').on('click', function () {
 });
 
 
-$('#profile-img').on('click',function () {
+$('#profile-img').on('click', function () {
     $('#profile-modal').modal({
         keyboard: false,
-        show:true,
+        show: true,
         backdrop: 'static'
-      })
-     
+    })
+
 })
 
-$('#profileSetting').on('click',function () {
+$('#profileSetting').on('click', function () {
     $('#profile-modal').modal({
         keyboard: false,
-        show:true,
+        show: true,
         backdrop: 'static'
-      })
-     
+    })
+
 })
 
-$('#saveInfo').on('click',function(){
-    var files=$('#profilePicture').get(0).files;
-    var formData=new FormData();
-    var file=files[0];
-    formData.append('file',file,file.name);
-    
-    $.ajax({
-        type: "POST",
-        url: "/upload",
-        data: formData,
-        processData:false,
-        contentType: false,
-        dataType: 'json',
-        success: function (response) {
-            var imgUrl=response;
-            debugger
-            $('#profile-img').attr("src",imgUrl);
+$('#saveInfo').on('click', function () {
+    var files = $('#profilePicture').get(0).files;
+    var formData = new FormData();
+    var file = files[0];
+    formData.append('file', file, file.name);
+    if (file.size > FILE_LIMIT) {
+        alertify.error('File that you choose is too big. Max size available is 2MB', 'error', 7);
+    }
+    else {
+        $.ajax({
+            type: "POST",
+            url: "/upload",
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $('#profile-modal .waiting').show();
+            },
+            dataType: 'json',
+            success: function (response) {
+                var imgUrl = response;
+                $('#profile-img').attr("src", imgUrl);
+                debugger
+                $('#profile-modal .waiting').hide();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Update Successfully',
+                    text: "Your profile image has been updated successfully."
+                })
+                debugger
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Update Successfully',
-                text: "Your profile image has been updated successfully."
-                
-              })
+                $('#profile-modal').modal('hide');
 
-              $('#profile-modal').modal('hide');
-        }
-    });
+            }
+        });
+    }
 })

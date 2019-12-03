@@ -45,7 +45,6 @@ function addContact() {
         $.ajax({
             method: 'GET',
             url: '/addfr/' + name,
-            async: false,
             dataType: 'json',
             success: function (data) {
 

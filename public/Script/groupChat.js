@@ -211,7 +211,7 @@ function addNewMember() {
     var conv_id = $('#conversation .contact.active').attr('conv_id');
     var friend = getUserInfor(name);
     var me_id = user_send;
-    debugger
+    
     if (friend) {
         var isPushed = newMembers.some((element, index, arr) => {
             return element == friend.user_id;
@@ -222,7 +222,7 @@ function addNewMember() {
         });
         if (!isPushed && friend.user_id != me_id && !isInGroup) {
             newMembers.push(friend.user_id);
-            debugger
+            
             var item = $('<li class="list-group-item "></li>');
 
             $(item).append('<img src="' + friend.profile_img + '"/>');
@@ -255,7 +255,7 @@ function updateGroupMembers() {
             contentType: 'application/json',
             success: function (result) {
                 $('#addMembers').modal('hide');
-                debugger
+                
                 loadConversation();
 
                 Swal.fire({

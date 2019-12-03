@@ -28,8 +28,11 @@ $('.messages ul').on({
 
         list.forEach(element => {
             if (element != me_id) {
-                var profile_url = getUser(element).profile_img;
-                $(temp).find('.seen-users').append('<img class="seen-img" src="' + profile_url + '"/>');
+                var friend = getUser(element);
+                var profile_url = friend.profile_img;
+                var name = friend.firstname + ' ' + friend.lastname;
+                
+                $(temp).find('.seen-users').append('<img class="seen-img" src="' + profile_url + '" title="'+name+'"/>');
             }
         });
     },
@@ -85,13 +88,6 @@ function addMessage(type, message, conv_id, message_id, friend_id) {
             $('.message-input input').val(null);
         }
     }
-
-    // if (messaging == conv_id) {
-    //     var typing = $('li.typing');
-    //     $('<li class=' + type + ' message_id='+message_id+'><img src="' + imgUrl + '" alt="" class="profile-img"/><p>' + message + '</p></li>').appendTo($('.messages ul'));
-    //     $('.messages ul').append(typing);
-    //     $('.message-input input').val(null);
-    // }
 
     var conversation = $('.contact[conv_id=' + conv_id + ']');
 

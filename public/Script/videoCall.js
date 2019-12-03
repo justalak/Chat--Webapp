@@ -117,6 +117,6 @@ socket.on('answer-call', function (data) {
 
 
 peer.on('error', function (err) {
-    alertify.alert(err.toString())
+    alertify.notify(err.toString(),'error')
 });
 

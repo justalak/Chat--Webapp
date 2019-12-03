@@ -76,16 +76,19 @@ function loadConversation(type='all') {
     $('#conversation ul').hide();
     $('#conversation ul').fadeIn(1000);
     $('#conversation ul').empty();
+    $('#conversation').show();
+    $('#friend-list').hide();
 
     $.ajax({
         type: "GET",
         url: "/loadconv/"+type,
         beforeSend: function(){
-            debugger
+            $('#sidepanel .waiting').show();
         },
         dataType: "json",
         success: function (data) {
-
+            $('#sidepanel .waiting').hide();
+            
             data.forEach(conv => {
                 var conv_id = conv.conversation.conv_id;
                 pageNumber[conv_id] = 1;
@@ -94,7 +97,7 @@ function loadConversation(type='all') {
                 var previewMessage, sender, marked, name, image;
                 var groupClass;
                 var time = '';
-                
+
                 if (!preview) {
                     previewMessage = "You're connected on Messenger"
                     marked = '';
@@ -149,6 +152,7 @@ function loadConversation(type='all') {
                 if (conv.friends_id.length <= 1) {
                     $("#conversation li[conv_id='" + conv.conversation.conv_id + "']").attr('user_id', friend_id);
                 }
+
                 updateStatusUser();
             });
         }

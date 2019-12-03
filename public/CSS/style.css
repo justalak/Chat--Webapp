@@ -127,7 +127,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    margin: 6px 8px 6px 8px !important;
+    margin: 6px 0px 0px 6px !important;
 }
 .sent .seen-users{
     float: right;
