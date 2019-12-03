@@ -99,6 +99,7 @@ function loadContact() {
             $.each(data, function (index, item) {
                 var name = item['firstname'] + ' ' + item['lastname'];
                 var user_id = item['user_id'];
+                var list=[user_id];
                 var profileURL = item.profile_img;
                 var li = $('<li class="contact" user_id="' + user_id + '"></li>');
 
@@ -112,6 +113,7 @@ function loadContact() {
                     '</div>';
                 $(li).append(contact);
                 $('#friend-list ul').append(li);
+                $("#friend-list li[user_id='" + user_id + "']").data('friends_id',list);
             })
         },
         err: function () {

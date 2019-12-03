@@ -76,10 +76,13 @@ function loadConversation(type='all') {
     $('#conversation ul').hide();
     $('#conversation ul').fadeIn(1000);
     $('#conversation ul').empty();
+
     $.ajax({
         type: "GET",
         url: "/loadconv/"+type,
-        async: false,
+        beforeSend: function(){
+            debugger
+        },
         dataType: "json",
         success: function (data) {
 
@@ -91,6 +94,7 @@ function loadConversation(type='all') {
                 var previewMessage, sender, marked, name, image;
                 var groupClass;
                 var time = '';
+                
                 if (!preview) {
                     previewMessage = "You're connected on Messenger"
                     marked = '';
@@ -145,10 +149,10 @@ function loadConversation(type='all') {
                 if (conv.friends_id.length <= 1) {
                     $("#conversation li[conv_id='" + conv.conversation.conv_id + "']").attr('user_id', friend_id);
                 }
+                updateStatusUser();
             });
         }
     });
-
 }
 
 

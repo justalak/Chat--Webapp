@@ -1,42 +1,52 @@
 
-var user_id = $('#profile-img').attr('user_id');
+var me_id = $('#profile-img').attr('user_id');
 var socket = io();
-socket.emit('connected', { user_id: user_id });
+socket.emit('connected', { user_id: me_id });
 socket.emit('check-status');
-var onlineList=[];
+var onlineList = [];
 
 socket.on('online-list', function (listid) {
-    listid.forEach(user_id => {
-        var friend = $('.contact[user_id=' + user_id + ']').find('.contact-status');
-        $(friend).removeClass('busy');
-        $(friend).addClass('online');
-    });
+    onlineList = listid;
+    updateStatusUser();
 })
 
-function checkStatusUser(){
+/**
+ * Hàm thực hiện cập nhật danh sách online
+ */
+function updateStatusUser() {
 
     $('.contact').find('.contact-status').removeClass('online');
     $('.contact').find('.contact-status').addClass('busy');
 
-    onlineList.forEach(user_id => {
-        var friend = $('.contact[user_id=' + user_id + ']').find('.contact-status');
-        $(friend).removeClass('busy');
-        $(friend).addClass('online');
-    });
+    var list = $('.contact');
+
+   for(var i=0;i<onlineList.length;i++){
+        $.each(list, (index, item) => {
+            var id=parseInt(onlineList[i]);
+            var members = $(item).data('friends_id');
+            
+            if (members.indexOf(id) != -1) {
+                var friend = $(item).find('.contact-status');
+                $(friend).removeClass('busy');
+                $(friend).addClass('online');
+            }
+        })
+    }
 }
 
-socket.on('user-online',function(user_id){
-    if(onlineList.indexOf(user_id)!=-1){
+socket.on('user-online', function (user_id) {
+    
+    if (onlineList.indexOf(user_id) == -1) {
         onlineList.push(user_id);
     }
-    debugger
-    checkStatusUser();
+    
+    updateStatusUser();
 })
-socket.on('user-offline',function(user_id){
-    if(onlineList.indexOf(user_id)!=-1){
-        onlineList.splice(onlineList.indexOf(user_id),1);
+socket.on('user-offline', function (user_id) {
+    if (onlineList.indexOf(user_id) != -1) {
+        onlineList.splice(onlineList.indexOf(user_id), 1);
     }
-   //checkStatusUser();
+    updateStatusUser();
 })
 
 
