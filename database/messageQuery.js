@@ -16,11 +16,14 @@ module.exports = {
         }
     },
     addAttachment: async (conv_id, user_send, filetype, filename, filepath) => {
-
+        try{
         var result = await db.query('insert message(conv_id,user_send,content,type,filepath) values (?,?,?,?,?)', [conv_id, user_send, filename, filetype, filepath]);
         await db.query('update conversation set lasttime=current_timestamp() where conv_id=? ', [conv_id]);
 
         return result[0].insertId;
+        }catch(err){
+            console.log(err);
+        }
     },
     getMessage: async (conv_id, page) => {
         try {

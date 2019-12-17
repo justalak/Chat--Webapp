@@ -36,12 +36,9 @@ function displayAttachment(type, file, filename, conv_id, user_id) {
             '</li>');
 
     }
-
     var conversation = $('.contact[conv_id=' + conv_id + ']');
-
     $('#conversation ul').prepend(conversation);
     $(conversation).find('.preview').html('<span>' + sender + ': </span>Sent an attachment');
-
     if (type == 'sent') {
         $(conversation).find('.preview').addClass('marked');
     }
