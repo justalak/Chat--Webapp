@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Project I: Chat Application",
   "main": "server.js",
+  "engines": {
+    "node": "10.16.3",
+    "npm": "6.9.3"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",

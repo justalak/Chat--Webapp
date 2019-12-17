@@ -40,6 +40,8 @@ app.use(function(req,res,next){
 //app.use('/peerjs', peerserver);
 route(app);
 
-http.listen(process.env.PORT || 3000);
+http.listen(process.env.PORT || 3000,()=>{
+    console.log("running on port "+process.env.PORT)
+});
 
 initSocket(io);
