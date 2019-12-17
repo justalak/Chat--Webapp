@@ -69,8 +69,8 @@ module.exports = {
     changeGroupName: async (conv_id, newname) => {
         try {
             var res = await db.query('update conversation set name=? where conv_id=?', [newname, conv_id]);
-            
             return true;
+            
         } catch (err) {
             console.log(err);
             return false;

@@ -7,6 +7,7 @@ module.exports = {
             'from contact, user user1, user user2 ' +
             'where (user1.user_id=contact.user1_id and user2.user_id=contact.user2_id) ' +
             'and (user2.user_id=?)';
+
         var query2 = 'select user2.* ' +
             'from contact, user user1, user user2 ' +
             'where (user1.user_id=contact.user1_id and user2.user_id=contact.user2_id) ' +
@@ -25,10 +26,10 @@ module.exports = {
         try {
             var add = await db.query('select * from user where username=? or email=?', [name,name]);
 
-
             if (add[0].length < 1) {
                 result['result'] = false;
             }
+            
             else {
                 var user2_id = add[0][0].user_id;
                 var getContact = await db.query('select * from contact where (user1_id=? and user2_id=?) or(user1_id=? and user2_id=?)',
@@ -66,8 +67,10 @@ module.exports = {
     },
     checkNotifications: async(user_id)=>{
         try{
+
         await db.query('update contact set user1_seen=1 where (user1_id=? and user1_seen=0)',[user_id]);
         await db.query('update contact set user2_seen=1 where (user2_id=? and user2_seen=0)',[user_id]);
+        
         return true;
         }catch(err){
             console.log(err);

@@ -40,6 +40,6 @@ app.use(function(req,res,next){
 //app.use('/peerjs', peerserver);
 route(app);
 
-http.listen(8080);
+http.listen(3000);
 
 initSocket(io);
