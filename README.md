@@ -2,6 +2,11 @@
 
 Project I: Chat Application
 
+Web base application using:
+
+- Nodejs
+- Database: Mysql
+
 Feature of this webapp:
 
 - Login and register
@@ -10,5 +15,7 @@ Feature of this webapp:
 - Chat single, group chat
 - Send file, image
 - Video chat
+
+
 
 Thanks for watching
