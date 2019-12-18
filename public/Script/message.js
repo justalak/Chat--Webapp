@@ -31,8 +31,8 @@ $('.messages ul').on({
                 var friend = getUser(element);
                 var profile_url = friend.profile_img;
                 var name = friend.firstname + ' ' + friend.lastname;
-                
-                $(temp).find('.seen-users').append('<img class="seen-img" src="' + profile_url + '" title="'+name+'"/>');
+
+                $(temp).find('.seen-users').append('<img class="seen-img" src="' + profile_url + '" title="' + name + '"/>');
             }
         });
     },
@@ -148,10 +148,21 @@ function newMessage() {
         type: "POST",
         url: "/sendmessage",
         data: JSON.stringify({ user_send: user_send, user_receive: user_receive, conv_id: conv_id, content: message }),
+        beforeSend: function () {
+            $('<li class="sending sent">' +
+                '<div class="clearfix">' +
+                '<div class="spinner-border spinner-border-sm float-right text-primary" role="status">' +
+                '<span class="sr-only">Loading...</span>' +
+                '</div>' +
+                '</div>' +
+                '<p>' + message + '</p>' +
+                '</li>').appendTo($('.messages ul'));
+            $(".messages").animate({ scrollTop: docHeight * 2 + 93 }, "fast");
+        },
         dataType: "json",
         contentType: "application/json",
         success: function (response) {
-
+            $('.sending').remove()
             addMessage('sent', message, conv_id, response);
             socket.emit('new-message', { user_send: user_send, user_receive: user_receive, conv_id: conv_id, content: message, message_id: response });
         }

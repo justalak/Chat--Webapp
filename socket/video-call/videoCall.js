@@ -15,6 +15,9 @@ var videoCall = (io) => {
             socket.on('ready-to-call',(data)=>{
                 helper.emitNotifyToArray(clients, data.listener,socket, 'ready-to-call', data)
             });
+            socket.on('end-call',(data)=>{
+                helper.emitNotifyToArray(clients, data.destination,socket, 'end-call', data)
+            })
             socket.on('disconnect', () => {
                 clients = helper.removeSocketIdFromArray(clients, data.user_id, socket);
             })

@@ -36,11 +36,19 @@ $('#video-call').on('click', function () {
             call.on('stream', function (stream) {
                 $('#their-video').prop('srcObject', stream);
             });
+            $('#end-call').on('click', function () {
+                socket.emit('end-call', { host:me_id, destination: friend_id });
+                call.close();
+            })
             call.on('close', function () {
 
                 $('#callModal').modal('hide');
                 $('#endCall').modal('show');
             });
+            socket.on('end-call',(data)=>{
+                $('#callModal').modal('hide');
+                $('#endCall').modal('show');
+            })
         }, function (err) { alertify.notify(err.toString()) });
 
         $('#callModal .profileImg').html(' <img src="' + friend.profile_img + '">');
@@ -49,6 +57,9 @@ $('#video-call').on('click', function () {
             backdrop: 'static'
         });
         socket.emit('video-call', { caller: me_id, listener: friend_id });
+    }
+    else{
+        alertify.notify('User is offline','error');
     }
 });
 
@@ -70,7 +81,7 @@ socket.on('video-call', function (data) {
                 audio: true,
                 video: true
             }, function (stream) {
-                debugger
+                
                 // Hiển thị video bản thân
                 // var localStream = stream;
                 $('#my-video').prop('srcObject', stream);
@@ -87,7 +98,16 @@ socket.on('video-call', function (data) {
     
     
                 $('#end-call').on('click', function () {
+                    socket.emit('end-call', { host:me_id, destination: caller });
                     call.close();
+                })
+                call.on('close', function () {
+                    $('#callModal').modal('hide');
+                    $('#endCall').modal('show');
+                });
+                socket.on('end-call',(data)=>{
+                    $('#callModal').modal('hide');
+                    $('#endCall').modal('show');
                 })
     
             }, function (err) { alertify.notify(err.toString(), 'error') });

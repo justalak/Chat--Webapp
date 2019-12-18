@@ -24,12 +24,12 @@ module.exports = {
     addContact: async (user_id, name) => {
         var result = {};
         try {
-            var add = await db.query('select * from user where username=? or email=?', [name,name]);
+            var add = await db.query('select * from user where username=? or email=?', [name, name]);
 
             if (add[0].length < 1) {
                 result['result'] = false;
             }
-            
+
             else {
                 var user2_id = add[0][0].user_id;
                 var getContact = await db.query('select * from contact where (user1_id=? and user2_id=?) or(user1_id=? and user2_id=?)',
@@ -54,25 +54,29 @@ module.exports = {
         }
     },
     getNotification: async (user_id) => {
-        var list = [];
-        var res =await db.query('select user1_id,user2_id from contact where (user1_id=? and user1_seen=0) or (user2_id=? and user2_seen=0) order by create_time desc',
-            [user_id, user_id]);
-        res[0].forEach(element => {
-            if (element.user1_id == user_id)
-                list.push(element.user2_id);
-            else
-                list.push(element.user1_id);
-        });
-        return list;
+        try {
+            var list = [];
+            var res = await db.query('select user1_id,user2_id from contact where (user1_id=? and user1_seen=0) or (user2_id=? and user2_seen=0) order by create_time desc',
+                [user_id, user_id]);
+            res[0].forEach(element => {
+                if (element.user1_id == user_id)
+                    list.push(element.user2_id);
+                else
+                    list.push(element.user1_id);
+            });
+            return list;
+        } catch (err) {
+            console.log(err);
+        }
     },
-    checkNotifications: async(user_id)=>{
-        try{
+    checkNotifications: async (user_id) => {
+        try {
 
-        await db.query('update contact set user1_seen=1 where (user1_id=? and user1_seen=0)',[user_id]);
-        await db.query('update contact set user2_seen=1 where (user2_id=? and user2_seen=0)',[user_id]);
-        
-        return true;
-        }catch(err){
+            await db.query('update contact set user1_seen=1 where (user1_id=? and user1_seen=0)', [user_id]);
+            await db.query('update contact set user2_seen=1 where (user2_id=? and user2_seen=0)', [user_id]);
+
+            return true;
+        } catch (err) {
             console.log(err);
             return false;
         }

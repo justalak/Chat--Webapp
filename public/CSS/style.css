@@ -89,9 +89,9 @@
     line-height: 50px;
 }
 .loading{
-    background: url(../Images/rolling.gif) center no-repeat;
+    /* background: url(../Images/rolling.gif) center no-repeat;
     height: 50px;
-    background-size: contain;
+    background-size: contain; */
 }
 #their-video{
     width:500px;

@@ -16,7 +16,7 @@ and open the template in the editor.
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="../CSS/login-form.css" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon"  href="../Images/favicon..ico" />
+    <link rel="shortcut icon" href="../Images/favicon..ico" />
 </head>
 
 <body>
@@ -60,7 +60,7 @@ and open the template in the editor.
         <div class="card user">
             <article class="card-body">
 
-                <button  class="float-right btn btn-outline-primary" data-toggle="modal"
+                <button class="float-right btn btn-outline-primary" data-toggle="modal"
                     data-target="#exampleModalCenter">
                     Sign up
                 </button>
@@ -70,6 +70,11 @@ and open the template in the editor.
                 <hr>
                 <div id='alert' class="alert alert-danger" role="alert">
                     Wrong username or password. Try again
+                </div>
+                <div class="text-center" id="login-loading" style="display:none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
                 <form>
                     <div class="form-group">
@@ -143,7 +148,7 @@ and open the template in the editor.
 
                                 <input fieldName='lastname' type="text" class="form-control" placeholder="Lastname">
                                 <div class="invalid-feedback">
-                                    Please input a valid  name
+                                    Please input a valid name
                                 </div>
                             </div>
                         </div>

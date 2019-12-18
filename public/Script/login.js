@@ -28,8 +28,12 @@ class User {
                 url: '/login',
                 data:JSON.stringify(info),
                 contentType: 'application/json',
+                beforeSend:function(){
+                    $('#login-loading').show();
+                },
                 dataType: 'json',
                 success: function (data) {
+                    $('#login-loading').hide();
                     if(data['result']===false){
                         $('#alert').show();
                     }
@@ -150,6 +154,7 @@ class User {
         });
         return flag;
     }
+
     blurInput() {
         var fieldName = $(this).attr('fieldName');
         var value = $(this).val();

@@ -60,6 +60,7 @@ function getUserID() {
 }
 
 function getMessage(conv_id, page) {
+    
     var result;
     $('#loading').show();
 
@@ -81,6 +82,7 @@ function getMessage(conv_id, page) {
 }
 
 function getUser(user_id) {
+    
     var result;
     $.ajax({
         type: "GET",
