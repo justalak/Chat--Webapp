@@ -1,6 +1,7 @@
 # Chat-Webapp
 
 Project I: Chat Application
+
 Tech stack:
   
 - Front-end: HTML, CSS, Jquery, Bootstrap,...
