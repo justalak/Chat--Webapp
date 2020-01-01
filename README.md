@@ -1,6 +1,11 @@
 # Chat-Webapp
 
 Project I: Chat Application
+Tech stack:
+  
+- Front-end: HTML, CSS, Jquery, Bootstrap,...
+- Back-end: NodeJS
+- Database: MySQL
 
 Feature of this webapp:
 
